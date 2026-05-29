@@ -984,30 +984,18 @@ Transform:
   m_GameObject: {fileID: 948809740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 1, z: 5}
+  m_LocalPosition: {x: -2, y: 1, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 855391916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1055257593 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4688261038833467525, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+--- !u!4 &1055257594 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1189261377176997194, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
   m_PrefabInstance: {fileID: 5177818477857715820}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1055257595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055257593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd6b6ce5b829e24fbcfc19175ed0401, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurretAtk
 --- !u!1 &1169798549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1030,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000022888184, y: 90.000015}
+  m_AnchoredPosition: {x: 0.000022888184, y: 113.7}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1169798551
@@ -1535,6 +1523,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5090096676500223471, guid: acb96fd16b2f1bc49ae7d3f6ae499f03, type: 3}
   m_PrefabInstance: {fileID: 1617777348}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1829735607 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9049715795224514695, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+  m_PrefabInstance: {fileID: 5177818477857715820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1844318281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1977,13 +1970,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: MachineGunTower
       objectReference: {fileID: 0}
+    - target: {fileID: 6343411250279976408, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+      propertyPath: partToRotate
+      value: 
+      objectReference: {fileID: 1055257594}
+    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 6715309060719873212, guid: dbac2ced5a8de37489bb4292d90f32ec, type: 3}
+    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 1829735607}
+    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+      propertyPath: partToRotate
+      value: 
+      objectReference: {fileID: 1055257594}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4688261038833467525, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1055257595}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
