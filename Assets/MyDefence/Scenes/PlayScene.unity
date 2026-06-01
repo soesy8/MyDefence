@@ -991,11 +991,6 @@ Transform:
   - {fileID: 855391916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1055257594 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1189261377176997194, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-  m_PrefabInstance: {fileID: 5177818477857715820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1169798549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,11 +1518,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5090096676500223471, guid: acb96fd16b2f1bc49ae7d3f6ae499f03, type: 3}
   m_PrefabInstance: {fileID: 1617777348}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1829735607 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9049715795224514695, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-  m_PrefabInstance: {fileID: 5177818477857715820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1844318281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1932,7 +1922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4784649769058117995, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.15
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4784649769058117995, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1970,22 +1960,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MachineGunTower
       objectReference: {fileID: 0}
-    - target: {fileID: 6343411250279976408, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-      propertyPath: partToRotate
-      value: 
-      objectReference: {fileID: 1055257594}
-    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 6715309060719873212, guid: dbac2ced5a8de37489bb4292d90f32ec, type: 3}
-    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-      propertyPath: firePoint
-      value: 
-      objectReference: {fileID: 1829735607}
-    - target: {fileID: 6952562253561872213, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
-      propertyPath: partToRotate
-      value: 
-      objectReference: {fileID: 1055257594}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
