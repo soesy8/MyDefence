@@ -261,12 +261,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Tower
   atkRange: 7
-  partToRotate: {fileID: 0}
+  partToRotate: {fileID: 1189261377176997194}
   turnSpeed: 10
   searchTimer: 0.25
   atkTimer: 1
-  bullet: {fileID: 0}
-  firePoint: {fileID: 0}
+  BulletPrefab: {fileID: 6715309060719873212, guid: dbac2ced5a8de37489bb4292d90f32ec, type: 3}
+  firePoint: {fileID: 9049715795224514695}
 --- !u!1 &5418561485326365426
 GameObject:
   m_ObjectHideFlags: 0

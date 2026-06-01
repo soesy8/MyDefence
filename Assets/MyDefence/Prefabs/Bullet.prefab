@@ -157,5 +157,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433c16e104ebf1f48af52bbeeaec5bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Bullet
-  target: {fileID: 0}
   bulletSpeed: 70
+  bulletImpactPrefab: {fileID: 7118743016203132162, guid: e9a4d746efcfc7143a7862e01b0e13b4, type: 3}

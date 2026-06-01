@@ -6,35 +6,43 @@ namespace MyDefence
     {
         #region Variables
         //타워가 타겟팅한 타겟의 정보를 받아줄 변수
-        public GameObject target;
+        private GameObject _target;
+
+        //타겟을 private으로 돌리고 property를 이용해 값을 저장하고 가져옴
+        public GameObject Target
+        {
+            get { return _target; }
+            set { _target = value; }
+        }
 
         //총알 속도
         public float bulletSpeed = 70.0f;
+
+        //타격 효과
+        public GameObject bulletImpactPrefab;   //임팩트 파티클 게임 오브젝트
         #endregion
 
 
         #region Unity Event Method
         void Update()
         {
-            //nullcheck
-            if (target == null)
+            //nullcheck - 타겟이 null이면 총알 파괴
+            if (Target == null)
             {
                 Destroy(gameObject);
                 return;
             }
 
             //날아갈 방향
-            Vector3 dir = (target.transform.position - transform.position).normalized;
+            Vector3 dir = (Target.transform.position - transform.position).normalized;
             
-            //총알 방향 설정
-            transform.LookAt(target.transform.position);
+            //총알 방향 설정 - Tower 스크립트에서 해결
+            //transform.LookAt(Target.transform.position);
 
             //충돌 판정 연산
             if (CheckPassPosition() == true)
             {
-                Debug.Log("명중");
-                Destroy(target);        //적 파괴
-                Destroy(gameObject);    //탄 파괴
+                HitTarget();                    //적 처치 및 탄환 파괴
             }
 
             //이동
@@ -50,7 +58,7 @@ namespace MyDefence
         public bool CheckPassPosition()
         {
             //Enemy와 Bullet 사이의 거리 연산
-            float distance = Vector3.Distance(transform.position, target.transform.position);
+            float distance = Vector3.Distance(transform.position, Target.transform.position);
 
             //이번 프레임 이동 거리
             float distanceThisFrame = Time.deltaTime * bulletSpeed;
@@ -61,6 +69,24 @@ namespace MyDefence
             }
 
             return false;
+        }
+
+        //명중 시 파괴
+        void HitTarget()
+        {
+            if (bulletImpactPrefab)     //!= null 과 같은 의미
+            {
+                //불렛이 적을 타격할 때 불렛이 부서져서 파편이 날아가는 효과
+                GameObject effectGo = Instantiate(bulletImpactPrefab, transform.position, Quaternion.identity);
+                //킬 예약
+                Destroy(effectGo, 2.0f);
+            }
+            
+
+            //Debug.Log("명중");
+            Destroy(Target);        //적 파괴
+            Destroy(gameObject);    //탄 파괴
+            
         }
         #endregion
 

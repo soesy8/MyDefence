@@ -26,7 +26,8 @@ namespace MyDefence
         public float atkTimer = 1.0f;
         private float atkCountdown = 0.0f;
 
-        public GameObject bullet;
+        //탄환 원본 및 발사 위치 변수
+        public GameObject BulletPrefab;
         public Transform firePoint;
 
         #endregion
@@ -59,11 +60,15 @@ namespace MyDefence
             {
                 //타이머 실행문 - 탄 발사
                 Debug.Log("Pew");
-                //instantiate로 탄환 생성
+                Shoot();                //발사과정 함수로 묶음
+
+                /*//instantiate로 탄환 생성
                 GameObject newBullet = Instantiate(bullet, firePoint.position, Quaternion.identity, partToRotate);
+                
                 //탄환 이동 목표 주입
                 Bullet shootBullet = newBullet.GetComponent<Bullet>();
-                shootBullet.target = target;
+                shootBullet.Target = target;*/
+                
                 //타이머 초기화
                 atkCountdown = 0f;
             }
@@ -135,6 +140,22 @@ namespace MyDefence
             partToRotate.rotation = Quaternion.Lerp(partToRotate.rotation, lookEnemy, Time.deltaTime * turnSpeed);
         }
 
+        //탄환 발사
+        void Shoot()
+        {
+            //instantiate로 탄환 생성
+            GameObject bulletGo = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation, partToRotate);
+
+            //탄환 이동 목표 주입
+            //탄환 오브젝트에 부착되어 있는 Bullet 클래스의 인스턴스 가져오기
+            Bullet bullet = bulletGo.GetComponent<Bullet>();
+
+            //nullcheck
+            if (bullet != null)
+            {
+                bullet.Target = target;
+            }
+        }
 
         #endregion
 
