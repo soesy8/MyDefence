@@ -59,7 +59,7 @@ namespace MyDefence
             if (atkCountdown >= atkTimer)
             {
                 //타이머 실행문 - 탄 발사
-                Debug.Log("Pew");
+                //Debug.Log("Pew");
                 Shoot();                //발사과정 함수로 묶음
 
                 /*//instantiate로 탄환 생성

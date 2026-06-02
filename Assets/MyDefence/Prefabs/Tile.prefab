@@ -125,6 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c8bad960d3a674390661ca2fb348ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Tile
-  selectTileMaterial: {fileID: 2100000, guid: 8bd36e6245c61214e8562c6c738883c0, type: 2}
-  rendPrefab: {fileID: 5794079454033374527}
+  hoverTileMaterial: {fileID: 2100000, guid: 8bd36e6245c61214e8562c6c738883c0, type: 2}
   _towerPrefab: {fileID: 5246306331095416977, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
