@@ -2,9 +2,10 @@ using UnityEngine;
 
 namespace MyDefence
 {
-    public class Camera : MonoBehaviour
+    public class CameraMove : MonoBehaviour
     {
         #region Variables
+        private Camera mainCamera;
         //카메라 이동 속도
         public float moveSpeed = 10.0f;
 
@@ -14,9 +15,17 @@ namespace MyDefence
 
         //화면 바깥 두께
         public float edgeMargin = 20f;
+
+        //줌인 속도
+        public float zoomSpeed = 10.0f;
         #endregion
 
         #region Unity Event Method
+        void Start()
+        {
+            mainCamera = GetComponent<Camera>();
+        }
+
         void Update()
         {
             //전후좌우 키 입력받기
@@ -51,6 +60,25 @@ namespace MyDefence
             if (mouseY > screenHeight - edgeMargin || v > 0)
             { transform.position += moveSpeed * Time.deltaTime * Vector3.forward; }
 
+
+            //스크롤 기능 구현
+            float scroll = Input.GetAxis("Mouse ScrollWheel") * -zoomSpeed;
+
+            //줌인 최대치
+            if (mainCamera.fieldOfView <= 20.0f && scroll < 0)
+            {
+                mainCamera.fieldOfView = 20.0f;
+            }
+            //줌아웃 최대치
+            else if (mainCamera.fieldOfView >= 60.0f && scroll > 0)
+            {
+                mainCamera.fieldOfView = 60.0f;
+            }
+            //줌 인/아웃 기능
+            else
+            {
+                mainCamera.fieldOfView += scroll;
+            }
         }
         #endregion
     }

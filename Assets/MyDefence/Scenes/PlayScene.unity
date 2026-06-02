@@ -573,6 +573,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Camera
   moveSpeed: 10
+  edgeMargin: 20
+  zoomSpeed: 10
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
