@@ -112,7 +112,8 @@ New Input System
 - 만들어진 Class의 객체(인스턴스)를 생성해서 인풋 처리
 
  2) SendMessage 방법
-- PlayerInput 컴포넌트를 대상 오브젝트에 추가한다
+- PlayerInput 컴포넌트를 대상 오브젝트에 추
+가한다
 - Actions에 설계한 Actions를 등록한다 (인스펙터 창에 드래그햐여 바인딩)
 - Behaviour를 SendMessages로 설정한다
 - 스크립트에 유저 인풋 값을 받아오는 함수를 만든다 (규칙에 맞게 만든다)

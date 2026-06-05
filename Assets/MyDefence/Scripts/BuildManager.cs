@@ -36,17 +36,17 @@ namespace MyDefence
         private GameObject selectedTower;
 
         //타워 프리펩
-        public GameObject towerPrefab;
+        //public GameObject towerPrefab;
         #endregion
 
 
 
         #region Unity Event Method
-        private void Start()
+        /*private void Start()
         {
             //머신건 프리팹 선택
             selectedTower = towerPrefab;
-        }
+        }*/
         #endregion
 
 
@@ -56,6 +56,13 @@ namespace MyDefence
         public GameObject GetSelectedTower()
         {
             return selectedTower;
+        }
+
+        //외부에서 호출하여 타워를 선택해줄 메서드
+        public void SelectTower(GameObject tower)
+        {
+            selectedTower = tower;
+            //Debug.Log("머신건 타워를 선택 하였습니다!!");
         }
         #endregion
 
