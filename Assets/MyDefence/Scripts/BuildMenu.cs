@@ -6,7 +6,7 @@ namespace MyDefence
     {
         #region Var
         public GameObject machinegunPrefab;
-        public GameObject anotherTowerPrefab;
+        public GameObject rocketLauncherPrefab;
         #endregion
 
         #region Custom Method
@@ -17,10 +17,10 @@ namespace MyDefence
             Debug.Log("Machinegun 을 선택");
         }
 
-        public void AnotherTower()
+        public void RocketLauncher()
         {
-            BuildManager.Instance.SelectTower(anotherTowerPrefab);
-            Debug.Log("RocketLuncher 를 선택");
+            BuildManager.Instance.SelectTower(rocketLauncherPrefab);
+            Debug.Log("RocketLauncher 를 선택");
         }
         #endregion
     }
