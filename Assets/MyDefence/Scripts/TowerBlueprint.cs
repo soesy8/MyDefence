@@ -1,16 +1,12 @@
 using UnityEngine;
+using System;
 
-public class TowerBlueprint : MonoBehaviour
+namespace MyDefence
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Serializable]
+    public class TowerBlueprint
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public GameObject towerPrefab;
+        public int cost;
     }
 }

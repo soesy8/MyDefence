@@ -80,22 +80,37 @@ namespace MyDefence
             //클릭 투과 현상 방지
             if (EventSystem.current.IsPointerOverGameObject()) { return; }
 
+            TowerBlueprint blueprint = buildManager.GetSelectedTower();
+
             //타워 생성 - 타워 프리팹이 할당되어 있는지 확인
-            if (buildManager.GetSelectedTower() != null)
+            if (blueprint != null)
             {
                 //Debug.Log("클릭");
                 //중복 확인
                 if (towerOnTile == null)
                 {
-                    //타워 생성
-                    GameObject tower
-                    = Instantiate(buildManager.GetSelectedTower(), transform.position + new Vector3(0, 0.05f, 0),
-                    Quaternion.identity);
-                    towerOnTile = tower;
-                    //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
+                    if (GameData.money >= blueprint.cost)
+                    {
+                        //타워 생성
+                        GameObject tower
+                        = Instantiate(blueprint.towerPrefab, transform.position + new Vector3(0, 0.05f, 0),
+                        Quaternion.identity);
+                        towerOnTile = tower;
+                        //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
 
-                    //타워를 설치 후 다시 선택한 타워를 null로 변경
-                    buildManager.SetSelectTower(null);
+                        GameData.money -= blueprint.cost;
+                        Debug.Log($"Money : {GameData.money}");
+
+                        //타워를 설치 후 다시 선택한 타워를 null로 변경
+                        buildManager.SetSelectTower(null);
+
+                    }
+                    else
+                    {
+                        Debug.Log("Not Enough Money");
+                        buildManager.SetSelectTower(null);
+                    }
+                    
                 }
             }
             //else { Debug.Log("타워를 설치하지 못했습니다."); }

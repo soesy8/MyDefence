@@ -33,10 +33,12 @@ namespace MyDefence
 
         #region Variables
         //선택한 타워 게임 오브젝트 - 타일에 설치할 프리팹 오브젝트
-        private GameObject selectedTower;
+        //private GameObject selectedTower;
 
-        public GameObject machineGunPrefab;
-        public GameObject rocketLauncherPrefab;
+        public TowerBlueprint machineGunPrefab;
+        public TowerBlueprint rocketLauncherPrefab;
+
+        private TowerBlueprint selectedTowerBlueprint;
 
         //타워 프리펩
         //public GameObject towerPrefab;
@@ -56,15 +58,15 @@ namespace MyDefence
 
         #region Custom Method
         //선택한 타워 프리팹 오브젝트 반환
-        public GameObject GetSelectedTower()
+        public TowerBlueprint GetSelectedTower()
         {
-            return selectedTower;
+            return selectedTowerBlueprint;
         }
 
         //외부에서 호출하여 타워를 선택해줄 메서드
-        public void SetSelectTower(GameObject prefab)
+        public void SetSelectTower(TowerBlueprint blueprint)
         {
-            selectedTower = prefab;
+            selectedTowerBlueprint = blueprint;
             //Debug.Log("머신건 타워를 선택 하였습니다!!");
         }
         #endregion
