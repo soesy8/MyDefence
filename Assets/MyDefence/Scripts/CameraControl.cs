@@ -60,13 +60,13 @@ namespace MyDefence
             //마우스가 화면 안에 위치했을 때만 작동
             bool isMouseInScreen = mouseX >= 0 && mouseX <= screenWidth && mouseY >= 0 && mouseY <= screenHeight;
 
-            if (isMouseInScreen)
+            /*if (isMouseInScreen)
             {
                 if (mouseX < scrnEdge) moveDirection.x -= 1f;
                 if (mouseX > screenWidth - scrnEdge) moveDirection.x += 1f;
                 if (mouseY < scrnEdge) moveDirection.z -= 1f;
                 if (mouseY > screenHeight - scrnEdge) moveDirection.z += 1f;
-            }
+            }*/
 
             // 3. 최종 이동 (대각선 속도 보정 포함)
             transform.position += moveSpeed * Time.deltaTime * moveDirection.normalized;

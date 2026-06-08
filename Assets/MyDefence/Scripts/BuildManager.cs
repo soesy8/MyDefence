@@ -35,6 +35,9 @@ namespace MyDefence
         //선택한 타워 게임 오브젝트 - 타일에 설치할 프리팹 오브젝트
         private GameObject selectedTower;
 
+        public GameObject machineGunPrefab;
+        public GameObject rocketLauncherPrefab;
+
         //타워 프리펩
         //public GameObject towerPrefab;
         #endregion
@@ -59,9 +62,9 @@ namespace MyDefence
         }
 
         //외부에서 호출하여 타워를 선택해줄 메서드
-        public void SelectTower(GameObject tower)
+        public void SetSelectTower(GameObject prefab)
         {
-            selectedTower = tower;
+            selectedTower = prefab;
             //Debug.Log("머신건 타워를 선택 하였습니다!!");
         }
         #endregion

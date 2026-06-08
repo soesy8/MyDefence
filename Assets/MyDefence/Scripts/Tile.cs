@@ -9,6 +9,9 @@ namespace MyDefence
     public class Tile : MonoBehaviour
     {
         #region Variables
+        //빌드 매니저 싱글톤 인스턴스
+        private BuildManager buildManager;
+
         //변환할 메테리얼
         public Material hoverTileMaterial;
         
@@ -24,6 +27,8 @@ namespace MyDefence
 
         //타일에 설치된 타워를 저장할 변수
         private GameObject towerOnTile;
+
+
         #endregion
 
 
@@ -32,6 +37,7 @@ namespace MyDefence
         void Start()
         {
             //참조 - 변수를 private으로 돌리고 컴포넌트를 가져와서 사용
+            buildManager = BuildManager.Instance;
             rendPrefab = GetComponent<Renderer>();
 
             //필드 초기화 - 기존 메테리얼 저장
@@ -47,7 +53,7 @@ namespace MyDefence
             //클릭 투과 현상 방지
             if (EventSystem.current.IsPointerOverGameObject()) { return; }
 
-            if (BuildManager.Instance.GetSelectedTower() != null)
+            if (buildManager.GetSelectedTower() != null)
             {
                 if (rendPrefab != null && hoverTileMaterial != null)
                 {
@@ -75,7 +81,7 @@ namespace MyDefence
             if (EventSystem.current.IsPointerOverGameObject()) { return; }
 
             //타워 생성 - 타워 프리팹이 할당되어 있는지 확인
-            if (BuildManager.Instance.GetSelectedTower() != null)
+            if (buildManager.GetSelectedTower() != null)
             {
                 //Debug.Log("클릭");
                 //중복 확인
@@ -83,16 +89,16 @@ namespace MyDefence
                 {
                     //타워 생성
                     GameObject tower
-                    = Instantiate(BuildManager.Instance.GetSelectedTower(), transform.position + new Vector3(0, 0.05f, 0),
+                    = Instantiate(buildManager.GetSelectedTower(), transform.position + new Vector3(0, 0.05f, 0),
                     Quaternion.identity);
                     towerOnTile = tower;
-                    Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성했습니다");
+                    //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
 
                     //타워를 설치 후 다시 선택한 타워를 null로 변경
-                    BuildManager.Instance.SelectTower(null);
+                    buildManager.SetSelectTower(null);
                 }
             }
-            else { Debug.Log("타워를 설치하지 못했습니다."); }
+            //else { Debug.Log("타워를 설치하지 못했습니다."); }
         }
         #endregion
     }
