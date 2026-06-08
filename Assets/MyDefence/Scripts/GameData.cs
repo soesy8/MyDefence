@@ -4,6 +4,7 @@ namespace MyDefence
 {
     public class GameData : MonoBehaviour
     {
+        //초기 소지 재화
         public static int money = 400;
 
         /*public static GameData Instance { get; private set; }

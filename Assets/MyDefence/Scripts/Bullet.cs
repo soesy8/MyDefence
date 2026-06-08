@@ -16,7 +16,7 @@ namespace MyDefence
         protected float bulletSpeed = 70.0f;
 
         [SerializeField]
-        protected GameObject bulletImpactPrefab;
+        protected GameObject ImpactPrefab;
 
         protected virtual void Update()
         {
@@ -51,20 +51,20 @@ namespace MyDefence
         // 자식 클래스에서 재정의 가능
         protected virtual void HitTarget()
         {
-            if (bulletImpactPrefab)
+            if (ImpactPrefab)
             {
-                GameObject effectGo = Instantiate(bulletImpactPrefab, transform.position, Quaternion.identity);
+                GameObject effectGo = Instantiate(ImpactPrefab, transform.position, Quaternion.identity);
 
                 Destroy(effectGo, 2.0f);
             }
 
-            Destroy(Target);
+            Damage(Target);
             Destroy(gameObject);
         }
 
         protected void Damage(GameObject enemy)
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
     }
 }

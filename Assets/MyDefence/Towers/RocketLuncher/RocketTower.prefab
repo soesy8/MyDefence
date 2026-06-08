@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.RocketLuncher
   partToRotate: {fileID: 4641205055848048}
-  atkTimer: 1
+  atkTimer: 4
   rocketPrefab: {fileID: 1593046666255972, guid: 1c180a51b414c554c908eb08ad0f6144, type: 3}
   launchPoint: {fileID: 8591772783743230143}
 --- !u!1 &1515290547419108

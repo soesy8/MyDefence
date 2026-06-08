@@ -168,9 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Rocket
   bulletSpeed: 50
-  bulletImpactPrefab: {fileID: 4051531146095238039, guid: 53b6d848f66b43f498da46f975636326, type: 3}
+  ImpactPrefab: {fileID: 4051531146095238039, guid: 53b6d848f66b43f498da46f975636326, type: 3}
   damageRange: 3.5
-  rocketImpactPrefab: {fileID: 4051531146095238039, guid: 53b6d848f66b43f498da46f975636326, type: 3}
 --- !u!1 &1827127167504934
 GameObject:
   m_ObjectHideFlags: 0

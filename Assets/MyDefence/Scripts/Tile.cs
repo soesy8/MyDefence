@@ -89,7 +89,7 @@ namespace MyDefence
                 //중복 확인
                 if (towerOnTile == null)
                 {
-                    if (GameData.money >= blueprint.cost)
+                    if (GameData.money >= blueprint.cost)       //소지 재화가 충분한지 확인
                     {
                         //타워 생성
                         GameObject tower
@@ -98,8 +98,9 @@ namespace MyDefence
                         towerOnTile = tower;
                         //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
 
+                        //소지 재화 차감
                         GameData.money -= blueprint.cost;
-                        Debug.Log($"Money : {GameData.money}");
+                        Debug.Log($"Money : {GameData.money}");     //현재 재화 출력
 
                         //타워를 설치 후 다시 선택한 타워를 null로 변경
                         buildManager.SetSelectTower(null);
@@ -107,7 +108,7 @@ namespace MyDefence
                     }
                     else
                     {
-                        Debug.Log("Not Enough Money");
+                        Debug.Log("돈이 부족합니다.");
                         buildManager.SetSelectTower(null);
                     }
                     

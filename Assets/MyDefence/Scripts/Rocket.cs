@@ -7,13 +7,11 @@ namespace MyDefence
         [SerializeField]
         private float damageRange = 3.5f;
 
-        public GameObject rocketImpactPrefab;
-
         protected override void HitTarget()
         {
-            if (rocketImpactPrefab)
+            if (ImpactPrefab)
             {
-                GameObject effectGo = Instantiate(rocketImpactPrefab, transform.position, Quaternion.identity);
+                GameObject effectGo = Instantiate(ImpactPrefab, transform.position, Quaternion.identity);
 
                 Destroy(effectGo, 2.0f);
             }
@@ -31,7 +29,7 @@ namespace MyDefence
             {
                 if (hit.CompareTag("Enemy"))
                 {
-                    Destroy(hit.gameObject);
+                    Damage(hit.gameObject);
                 }
             }
         }
