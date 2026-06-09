@@ -1,20 +1,13 @@
 using UnityEngine;
 
-namespace MyDefence
+namespace MySample
 {
-    /// <summary>
-    /// 게임 데이터 변수를 관리하는 클래스
-    /// 게임머니
-    /// </summary>
-    public class GameData : MonoBehaviour
+    public class GameDataSample : MonoBehaviour
     {
-        //초기 소지 재화
-        //public static int money = 400;
-
         #region Variables
         private static int gold;        //소지금
 
-        public int startGold = 400;     //초기 소지금
+        public int startGold = 1000;     //초기 소지금
         #endregion
 
         #region Property
@@ -62,22 +55,5 @@ namespace MyDefence
         }
 
         #endregion
-        /*public static GameData Instance { get; private set; }
-
-        public int money = 400;
-
-        void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-            
-        }*/
     }
 }

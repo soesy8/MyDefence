@@ -1,85 +1,68 @@
-using UnityEngine;
+using MySample;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace MySameple
 {
     public class MoneyTest : MonoBehaviour
     {
-        //var
-        private int gold = 3000;
-
         [SerializeField]
         private TextMeshProUGUI goldText;
 
+        //구매 버튼 인스턴스
+        public Button button1000;
+        public Button button9000;
+
+        //public GameObject buttonColor;
         
-        [SerializeField]private Image smallPurchaseButtonImage;
-        [SerializeField]private Image largePurchaseButtonImage;
-
-
-        public GameObject buttonColor;
-        
-
-        void Start()
+        // Unity Event Method
+        void Update()
         {
-            Gold = gold;
-        }
-
-        public int Gold
-        {
-            get { return gold; }
-            private set
+            //버튼 상태에 따라 색 변환
+            if (GameDataSample.HasGold(1000))
             {
-                gold = value;
-                goldText.text = $"Gold : {gold}";
-
-                UpdateButtonColors();
+                button1000.image.color = Color.white;
             }
-        }
-
-        private void UpdateButtonColors()
-        {
-            // 1000원 상품 버튼 검사
-            if (Gold >= 1000)
-                smallPurchaseButtonImage.color = Color.white; // 구매 가능
             else
-                smallPurchaseButtonImage.color = Color.red;   // 구매 불가
+            {
+                button1000.image.color = Color.red;
+            }
 
-            // 9000원 상품 버튼 검사
-            if (Gold >= 9000)
-                largePurchaseButtonImage.color = Color.white; // 구매 가능
+            if (GameDataSample.HasGold(9000))
+            {
+                button9000.interactable = true;
+            }
             else
-                largePurchaseButtonImage.color = Color.red;   // 구매 불가
+            {
+                button9000.interactable = false;
+            }
+
+            //소지금 텍스트 UI
+            goldText.text = $"{GameDataSample.Gold} Gold";
         }
 
-        //Custom Method
-        public void SaveMoney()
+        #region Custom Method
+        public void Save1000()
         {
-            Debug.Log("+1000");
-            Gold +=  1000;
-            Debug.Log(gold);
+            GameDataSample.AddGold(1000);
+            Debug.Log("+ 1000 Gold");
         }
-        public void SmallPurchase()
+        public void Purchase1000()
         {
-            if (Gold < 1000)
+            if (GameDataSample.UseGold(1000))
             {
-                Debug.Log("not enough gold");
-                return;
+                Debug.Log("- 1000 Gold");
             }
-            Debug.Log("-1000");
-            Gold -= 1000;
-            Debug.Log(gold);
         }
-        public void LargePurchase()
+
+        public void Purchase9000()
         {
-            if (Gold < 9000)
+            if (GameDataSample.UseGold(9000))
             {
-                Debug.Log("not enough gold");
-                return;
+                Debug.Log("- 9000 Gold");
             }
-            Debug.Log("-9000");
-            Gold -= 9000;
-            Debug.Log(gold);
         }
+        #endregion
     }
 }

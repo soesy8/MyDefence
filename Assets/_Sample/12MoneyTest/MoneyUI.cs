@@ -19,7 +19,7 @@ namespace MyDefence
             // 🔎 매 프레임마다 GameData.money의 값을 감시해서 UI에 그려줍니다.
             if (moneyText != null)
             {
-                moneyText.text = $"Gold : {GameData.money}";
+                moneyText.text = $"Gold : {GameData.Gold}";
             }
         }
     }

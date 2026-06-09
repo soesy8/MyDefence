@@ -38,6 +38,9 @@ namespace MyDefence
         //serializable 클래스 사용
         public TowerBlueprint machineGunPrefab;
         public TowerBlueprint rocketLauncherPrefab;
+        
+        //레이저 타워 추가 예정
+        public TowerBlueprint laserTowerPrefab;
 
         //선택한 타워 프리팹 오브젝트를 저장할 변수
         private TowerBlueprint selectedTowerBlueprint;
@@ -45,6 +48,18 @@ namespace MyDefence
         //타워 프리펩
         //public GameObject towerPrefab;
         #endregion
+
+        /*#region Property
+        //타워 건설 가능 여부 체크, 읽기 전용 - true  건설 불가능, false 건설 가능
+        public bool CannotBuild
+        {
+            get { return selectedTowerBlueprint == null; }
+        }
+        public bool HasBuildCost
+        {
+            get { return GameData.HasGold(selectedTowerBlueprint.cost); }
+        }
+        #endregion*/
 
         #region Custom Method
         //선택한 타워 프리팹 오브젝트 반환

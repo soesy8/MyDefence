@@ -4,19 +4,26 @@ namespace MyDefence
 {
     public class Bullet : MonoBehaviour
     {
+        #region Variables
         protected GameObject _target;
-
-        public GameObject Target
-        {
-            get { return _target; }
-            set { _target = value; }
-        }
 
         [SerializeField]
         protected float bulletSpeed = 70.0f;
 
         [SerializeField]
         protected GameObject ImpactPrefab;
+
+        [SerializeField]
+        protected int atk = 50;
+        #endregion
+
+        #region Property
+        public GameObject Target
+        {
+            get { return _target; }
+            set { _target = value; }
+        }
+        #endregion
 
         protected virtual void Update()
         {
@@ -64,7 +71,11 @@ namespace MyDefence
 
         protected void Damage(GameObject enemy)
         {
-            Destroy(enemy.gameObject);
+            Enemy targetEnemy = enemy.GetComponent<Enemy>();
+
+            if (targetEnemy == null) { return; }
+
+            targetEnemy.TakeDamage(atk);
         }
     }
 }

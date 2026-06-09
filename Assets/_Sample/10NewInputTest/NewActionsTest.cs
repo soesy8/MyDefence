@@ -254,6 +254,34 @@ public partial class @NewActionsTest: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Cheating"",
+            ""id"": ""8ecb49ac-cba9-4c95-b706-c87e27b1a179"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac9d96ed-a8ee-4448-86b0-aa51305f7480"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6b7ff8b4-9362-4ba9-ad61-12bf263cbfce"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -263,11 +291,15 @@ public partial class @NewActionsTest: IInputActionCollection2, IDisposable
         m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
         m_Camera_MousePosition = m_Camera.FindAction("MousePosition", throwIfNotFound: true);
         m_Camera_EscToggle = m_Camera.FindAction("EscToggle", throwIfNotFound: true);
+        // Cheating
+        m_Cheating = asset.FindActionMap("Cheating", throwIfNotFound: true);
+        m_Cheating_Newaction = m_Cheating.FindAction("New action", throwIfNotFound: true);
     }
 
     ~@NewActionsTest()
     {
         UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, NewActionsTest.Camera.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Cheating.enabled, "This will cause a leak and performance issues, NewActionsTest.Cheating.Disable() has not been called.");
     }
 
     /// <summary>
@@ -457,6 +489,102 @@ public partial class @NewActionsTest: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="CameraActions" /> instance referencing this action map.
     /// </summary>
     public CameraActions @Camera => new CameraActions(this);
+
+    // Cheating
+    private readonly InputActionMap m_Cheating;
+    private List<ICheatingActions> m_CheatingActionsCallbackInterfaces = new List<ICheatingActions>();
+    private readonly InputAction m_Cheating_Newaction;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Cheating".
+    /// </summary>
+    public struct CheatingActions
+    {
+        private @NewActionsTest m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public CheatingActions(@NewActionsTest wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Cheating/Newaction".
+        /// </summary>
+        public InputAction @Newaction => m_Wrapper.m_Cheating_Newaction;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Cheating; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="CheatingActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(CheatingActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="CheatingActions" />
+        public void AddCallbacks(ICheatingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CheatingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CheatingActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="CheatingActions" />
+        private void UnregisterCallbacks(ICheatingActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CheatingActions.UnregisterCallbacks(ICheatingActions)" />.
+        /// </summary>
+        /// <seealso cref="CheatingActions.UnregisterCallbacks(ICheatingActions)" />
+        public void RemoveCallbacks(ICheatingActions instance)
+        {
+            if (m_Wrapper.m_CheatingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="CheatingActions.AddCallbacks(ICheatingActions)" />
+        /// <seealso cref="CheatingActions.RemoveCallbacks(ICheatingActions)" />
+        /// <seealso cref="CheatingActions.UnregisterCallbacks(ICheatingActions)" />
+        public void SetCallbacks(ICheatingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CheatingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CheatingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="CheatingActions" /> instance referencing this action map.
+    /// </summary>
+    public CheatingActions @Cheating => new CheatingActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
     /// </summary>
@@ -485,5 +613,20 @@ public partial class @NewActionsTest: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEscToggle(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Cheating" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="CheatingActions.AddCallbacks(ICheatingActions)" />
+    /// <seealso cref="CheatingActions.RemoveCallbacks(ICheatingActions)" />
+    public interface ICheatingActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

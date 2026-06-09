@@ -6,6 +6,41 @@ namespace MyDefence
     {
         public Transform target; // 이동할 종점(Target)의 위치
         public float speed = 5f;  // 이동 속도
+        [SerializeField] private int maxHp = 100;   //최대 체력
+        [SerializeField] private int rewardGold = 50;   //보상 골드
+        private int hp;     //현재 체력
+        [SerializeField] private GameObject deathEffectPrefab;
+
+        void Start()
+        {
+            hp = maxHp;   //hp 초기화
+        }
+        
+        //데미지를 받는 메서드
+        public void TakeDamage(int damage)
+        {
+            hp -= damage;
+
+            if (hp <= 0)
+            {
+                Die();
+            }
+        }
+
+        public void Die()
+        {
+            GameData.AddGold(rewardGold);
+
+            if (deathEffectPrefab)
+            {
+                GameObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(effect, 2f);
+            }
+
+            Destroy(gameObject);
+
+        }
+
 
         void Update()
         {

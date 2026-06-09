@@ -29,6 +29,13 @@ namespace MyDefence
             buildManager.SetSelectTower(buildManager.rocketLauncherPrefab);
             Debug.Log("RocketLauncher 선택");
         }
+
+        //레이저 타워 추가 예정
+        public void ClickLaserTower()
+        {
+            buildManager.SetSelectTower(buildManager.laserTowerPrefab);
+            Debug.Log("LaserTower 선택");
+        }
         #endregion
 
 

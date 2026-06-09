@@ -77,45 +77,65 @@ namespace MyDefence
         //타일을 클릭했을 때
         void OnMouseDown()
         {
+            //TowerBlueprint blueprint = buildManager.GetSelectedTower();
             //클릭 투과 현상 방지
-            if (EventSystem.current.IsPointerOverGameObject()) { return; }
+            if (EventSystem.current.IsPointerOverGameObject()) return;
 
+            if (buildManager.GetSelectedTower() == null) return;
+
+            if (GameData.Gold < buildManager.GetSelectedTower().cost)
+            {
+                Debug.Log($"돈이 부족합니다.");
+                buildManager.SetSelectTower(null);
+                return;
+            }
+
+            BuildTower();
+        }
+
+        public void BuildTower()
+        {
             TowerBlueprint blueprint = buildManager.GetSelectedTower();
 
+            GameObject tower
+                    = Instantiate(blueprint.towerPrefab, transform.position + new Vector3(0, 0.05f, 0),
+                    Quaternion.identity);
+            towerOnTile = tower;
+
+            GameData.UseGold(blueprint.cost);
+
+            buildManager.SetSelectTower(null);
+        }
+
+            /*TowerBlueprint blueprint = buildManager.GetSelectedTower();
+
+            if (GameData.Gold < blueprint.cost) { return; }
             //타워 생성 - 타워 프리팹이 할당되어 있는지 확인
             if (blueprint != null)
             {
-                //Debug.Log("클릭");
-                //중복 확인
                 if (towerOnTile == null)
                 {
-                    if (GameData.money >= blueprint.cost)       //소지 재화가 충분한지 확인
-                    {
-                        //타워 생성
-                        GameObject tower
-                        = Instantiate(blueprint.towerPrefab, transform.position + new Vector3(0, 0.05f, 0),
-                        Quaternion.identity);
-                        towerOnTile = tower;
-                        //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
+                    //타워 생성
+                    GameObject tower
+                    = Instantiate(blueprint.towerPrefab, transform.position + new Vector3(0, 0.05f, 0),
+                    Quaternion.identity);
+                    towerOnTile = tower;
+                    //Debug.Log($"{BuildManager.Instance.GetSelectedTower().name}를 생성");
 
-                        //소지 재화 차감
-                        GameData.money -= blueprint.cost;
-                        Debug.Log($"Money : {GameData.money}");     //현재 재화 출력
+                    //소지 재화 차감
+                    GameData.UseGold(blueprint.cost);
+                    Debug.Log($"Money : {GameData.Gold}");     //현재 재화 출력
 
-                        //타워를 설치 후 다시 선택한 타워를 null로 변경
-                        buildManager.SetSelectTower(null);
-
-                    }
-                    else
-                    {
-                        Debug.Log("돈이 부족합니다.");
-                        buildManager.SetSelectTower(null);
-                    }
-                    
+                    //타워를 설치 후 다시 선택한 타워를 null로 변경
+                    buildManager.SetSelectTower(null);
+                }
+                else
+                {
+                    Debug.Log("돈이 부족합니다.");
+                    buildManager.SetSelectTower(null);
                 }
             }
-            //else { Debug.Log("타워를 설치하지 못했습니다."); }
-        }
+        }*/
         #endregion
     }
 }
