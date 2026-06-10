@@ -28,22 +28,6 @@ namespace MyDefence
         {
             while (true) // 무한히 반복하여 웨이브 진행
             {
-                // 다음 웨이브 때는 스폰 수 증가
-                waveNumber++;
-
-                // 화면 상단의 n번째 웨이브 표시
-                nextWaveText.text = $"Wave : {waveNumber}";
-                //nextWaveText.text = string.Format("{0:00.00}", waveNumber); //실수(소수점) 이하 출력
-
-
-                // [기능 3] 현재 웨이브 수만큼 Enemy 스폰 (1 -> 2 -> 3...)
-                for (int i = 0; i < waveNumber; i++)
-                {
-                    SpawnEnemy();
-                    // 뭉쳐서 나오지 않게 약간의 간격을 둡니다
-                    yield return new WaitForSeconds(0.5f);
-                }
-
                 // [기능 2 & 4] 5초 타이머 및 UI 카운트다운 구현
                 float timer = 5f;
                 while (timer > 0)
@@ -54,6 +38,23 @@ namespace MyDefence
                     yield return null; // 다음 프레임까지 대기
                     timer -= Time.deltaTime; // 시간 차감
                 }
+
+                // 다음 웨이브 때는 스폰 수 증가
+                waveNumber++;
+
+                // 화면 상단의 n번째 웨이브 표시
+                nextWaveText.text = $"Wave : {waveNumber}";
+                //nextWaveText.text = string.Format("{0:00.00}", waveNumber); //실수(소수점) 이하 출력
+
+                // [기능 3] 현재 웨이브 수만큼 Enemy 스폰 (1 -> 2 -> 3...)
+                for (int i = 0; i < waveNumber; i++)
+                {
+                    SpawnEnemy();
+                    // 뭉쳐서 나오지 않게 약간의 간격을 둡니다
+                    yield return new WaitForSeconds(0.5f);
+                }
+
+                
             }
         }
 

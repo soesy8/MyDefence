@@ -11,6 +11,14 @@ namespace MyDefence
         #region Variables
         //라인 렌더러 인스턴스 - 레이저 빔
         private LineRenderer lineRenderer;
+
+        //레이저 데미지 관련 변수
+        [SerializeField] private float atkDamage = 30f;     //초당 데미지
+        [SerializeField] private float bonusDamage = 15f;   //추가 데미지
+        [SerializeField] private float bonusDamageInterval = 1.5f;  //추가 데미지 간격
+
+        [SerializeField] private float slowDebuff = 0.4f; //레이저 슬로우
+        [SerializeField] private float slowDuration = 1f; // 슬로우 지속시간
         #endregion
 
         #region Unity Event Method
@@ -56,26 +64,30 @@ namespace MyDefence
         #region Custom Method
         void ShootLaser()
         {
+            //적에게 데미지 주기
+            Enemy enemy = target.GetComponent<Enemy>();
+
             if (lineRenderer.enabled == false)
             {
                 lineRenderer.enabled = true;
+                enemy.ResetLaserHit();
             }
 
             //라인 렌더러 그리기 - 시작지점, 엔드지점 설정
             lineRenderer.SetPosition(0, firePoint.position);
             lineRenderer.SetPosition(1, target.transform.position);
 
-
-            /*//라인 렌더러의 시작점과 끝점 설정
-            lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, target.transform.position);
-            //적에게 데미지 주기
-            Enemy enemy = target.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(atk * Time.deltaTime);
-            }*/
+                enemy.TakeDamage(atkDamage * Time.deltaTime);
+
+                enemy.Slow(slowDebuff, slowDuration);
+
+                enemy.BonusDamage(bonusDamage, bonusDamageInterval);
+            }
         }
+
+
         #endregion
     }
 }

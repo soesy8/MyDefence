@@ -1976,7 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca5e7e345f1854459775ad94ee9861a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  isCheating: 0
+  isCheating: 1
 --- !u!1001 &1213507810
 PrefabInstance:
   m_ObjectHideFlags: 0
