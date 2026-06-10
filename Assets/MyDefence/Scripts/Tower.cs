@@ -4,13 +4,13 @@ using System.Collections;
 namespace MyDefence
 {
     /// <summary>
-    /// 타워를 관리하는 클래스
+    /// 타워를 관리하는 클래스, 타워들의 공통기능을 가진 부모 클래스
     /// </summary>
     public class Tower : MonoBehaviour
     {
         #region Variables
         //공격 범위 안에 있는 가장 가까운 적
-        private GameObject target;
+        protected GameObject target;
         //타워 공격 범위
         public float atkRange = 7.0f;
 
@@ -20,11 +20,11 @@ namespace MyDefence
 
         //SearchTimer 0.2sec
         public float searchTimer = 0.25f;
-        private float countdown = 0f;
+        protected float countdown = 0f;
 
         //attackSpeedTimer
         public float atkTimer = 1.0f;
-        private float atkCountdown = 0.0f;
+        protected float atkCountdown = 0.0f;
 
         //탄환 원본 및 발사 위치 변수
         public GameObject BulletPrefab;
@@ -33,7 +33,7 @@ namespace MyDefence
         #endregion
 
         #region Unity Event Method
-        void Update()
+        protected virtual void Update()
         {
             //0.2초 마다 한 번씩 공격 범위 안에 있는 가장 가까운 적 찾기
             countdown += Time.deltaTime;
@@ -98,7 +98,7 @@ namespace MyDefence
 
         #region Custom Method
         //터렛에서 가장 가까운 적 찾아 타겟으로 설정
-        void UpdateTarget()
+        protected virtual void UpdateTarget()
         {
             GameObject[] enemies;
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -130,7 +130,7 @@ namespace MyDefence
 
         }
 
-        void LockOn()
+        protected virtual void LockOn()
         {
             //터렛(가장 가까운 enemy의 움직임에 따라 터렛 헤드가 타겟 방향으로 회전
             Vector3 dir = (target.transform.position - partToRotate.position).normalized;
@@ -141,7 +141,7 @@ namespace MyDefence
         }
 
         //탄환 발사
-        void Shoot()
+        protected void Shoot()
         {
             //instantiate로 탄환 생성
             GameObject bulletGo = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation, partToRotate);

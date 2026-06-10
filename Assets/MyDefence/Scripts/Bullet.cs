@@ -69,7 +69,7 @@ namespace MyDefence
             Destroy(gameObject);
         }
 
-        protected void Damage(GameObject enemy)
+        protected virtual void Damage(GameObject enemy)
         {
             Enemy targetEnemy = enemy.GetComponent<Enemy>();
 
