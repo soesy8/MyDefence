@@ -21,6 +21,11 @@ namespace MyDefence
                 Debug.Log("showmethemoney");
                 ShowMeTheMoney();
             }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                GameOver();
+            }
         }
         #endregion
 
@@ -34,6 +39,15 @@ namespace MyDefence
             //10만 골드 지급
             GameData.AddGold(100000);
             Debug.Log($"+ 100,000 Gold");
+        }
+
+        void GameOver()
+        {
+            //치팅 체크
+            if (isCheating == false) return;
+
+            //게임 오버 처리
+            Debug.Log("Game Over!");
         }
 
         //레벨치팅

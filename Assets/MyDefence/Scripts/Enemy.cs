@@ -13,7 +13,7 @@ namespace MyDefence
         private float slowTimer = 0f; // 슬로우 타이머 변수
         
         //추가 데미지 변수
-        private float laserHitTiime = 0f;
+        private float laserHitTime = 0f;
 
         //체력 관련 변수
         [SerializeField] private float maxHp = 100f;   //최대 체력
@@ -55,6 +55,7 @@ namespace MyDefence
                 // 도착 판정 (거리가 아주 가까워지면 도착한 것으로 간주)
                 if (Vector3.Distance(transform.position, target.position) < 0.1f)
                 {
+                    GameData.LoseLife(1);
                     // 종점에 도착 완료했으므로 오브젝트 파괴 (Kill)
                     Destroy(gameObject);
                 }
@@ -101,9 +102,9 @@ namespace MyDefence
 
         public void BonusDamage(float damage, float interval)
         {
-            laserHitTiime += Time.deltaTime;
+            laserHitTime += Time.deltaTime;
 
-            if (laserHitTiime >= interval)
+            if (laserHitTime >= interval)
             {
                 TakeDamage(damage);
                 Debug.Log($"추가 데미지: {damage}");
@@ -113,7 +114,7 @@ namespace MyDefence
 
         public void ResetLaserHit() 
         { 
-            laserHitTiime = 0f;
+            laserHitTime = 0f;
             Debug.Log("레이저 히트 타이머 초기화");
         }
         #endregion
