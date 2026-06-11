@@ -14,34 +14,37 @@ namespace MyDefence
 
         #region Variables
         private static int gold;        //소지금
-        public int startGold = 400;     //초기 소지금
+        [SerializeField] private int startGold = 400;     //초기 소지금
         public static Action OnGoldChanged;     //골드 변환 알림
 
         private static int life;        //목숨
-        public int startLife = 10;      //초기 목숨
+        [SerializeField] private int startLife = 10;      //초기 목숨
+        private static int maxLife;
         public static Action OnLifeChanged;     //목숨 변환 알림
         #endregion
 
         #region Property
         //소지금 읽기 전용 속성
-        public static int Gold
-        {
-            get { return gold; }
-        }
+        public static int Gold => gold;
 
         //목숨 읽기 전용 속성
-        public static int Life
-        {
-            get { return life; }
-        }
+        public static int Life => life;
         #endregion
 
         #region Unity Event Method
         void Awake()
         {
             //초기화
-            gold = startGold;       //초기 소지금 지급
-            life = startLife;       //초기 목숨
+            if (gold == 0)
+            {
+                gold = startGold;       //초기 소지금 지급
+            }
+
+            if (life == 0)
+            {
+                life = startLife;       //초기 목숨
+                maxLife = startLife;    //최대 목숨
+            }
 
             //초기값 자동 갱신
             OnGoldChanged?.Invoke();
@@ -78,8 +81,21 @@ namespace MyDefence
             return gold >= amount;
         }
 
+        //목숨 추가
+        public static void AddLife(int amount)
+        {
+            life += amount;
+            //maxLife 체크
+            if (life >= maxLife)
+            {
+                life = maxLife;
+            }
+            OnLifeChanged?.Invoke();    //목숨 변환 알림
+        }
+
+
         //목숨 감소, 목숨이 0이하가 되면 게임 오버
-        public static void LoseLife(int amount)
+        public static void LoseLife(int amount = 1)
         {
             life -= amount;
             OnLifeChanged?.Invoke();    //목숨 변환 알림

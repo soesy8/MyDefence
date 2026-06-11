@@ -12,20 +12,26 @@ namespace MyDefence
         //라인 렌더러 인스턴스 - 레이저 빔
         private LineRenderer lineRenderer;
 
+        //레이저 임팩트 파티클/라이트 인스턴스 가져오기
+        public ParticleSystem laserImpact;
+        public Light laserLight;
+
         //레이저 데미지 관련 변수
         [SerializeField] private float atkDamage = 30f;     //초당 데미지
-        [SerializeField] private float bonusDamage = 15f;   //추가 데미지
-        [SerializeField] private float bonusDamageInterval = 1.5f;  //추가 데미지 간격
+        //[SerializeField] private float bonusDamage = 15f;   //추가 데미지
+        //[SerializeField] private float bonusDamageInterval = 1.5f;  //추가 데미지 간격
 
         [SerializeField] private float slowDebuff = 0.4f; //레이저 슬로우
         [SerializeField] private float slowDuration = 1f; // 슬로우 지속시간
         #endregion
 
         #region Unity Event Method
-        private void Start()
+        private void Awake()
         {
-            //참조
             lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.enabled = false;
+            laserLight.enabled = false;
+            laserImpact.Stop();
         }
 
         protected override void Update()
@@ -47,7 +53,9 @@ namespace MyDefence
                 //레이저 빔 끄기
                 if (lineRenderer.enabled)
                 {
+                    laserLight.enabled = false;
                     lineRenderer.enabled = false;
+                    laserImpact.Stop();
                 }
                 return;
 
@@ -70,12 +78,21 @@ namespace MyDefence
             if (lineRenderer.enabled == false)
             {
                 lineRenderer.enabled = true;
-                enemy.ResetLaserHit();
+                //enemy.ResetLaserHit();
+                laserImpact.Play();
+                laserLight.enabled = true;
             }
 
             //라인 렌더러 그리기 - 시작지점, 엔드지점 설정
             lineRenderer.SetPosition(0, firePoint.position);
             lineRenderer.SetPosition(1, target.transform.position);
+
+            //레이저 타격 이펙트 위치와 회전 설정
+            Vector3 dir = (firePoint.position - target.transform.position).normalized;
+            laserImpact.transform.position = target.transform.position + dir / 2;
+            laserImpact.transform.rotation = Quaternion.LookRotation(dir);
+            //laserImpact.LookAt(firePoint);
+
 
             if (enemy != null)
             {
@@ -83,7 +100,7 @@ namespace MyDefence
 
                 enemy.Slow(slowDebuff, slowDuration);
 
-                enemy.BonusDamage(bonusDamage, bonusDamageInterval);
+                //enemy.BonusDamage(bonusDamage, bonusDamageInterval);
             }
         }
 

@@ -13,13 +13,14 @@ namespace MyDefence
         private float slowTimer = 0f; // 슬로우 타이머 변수
         
         //추가 데미지 변수
-        private float laserHitTime = 0f;
+        //private float laserHitTime = 0f;
 
         //체력 관련 변수
         [SerializeField] private float maxHp = 100f;   //최대 체력
         private float hp;     //현재 체력
 
         //죽음 효과 관련 변수
+        private bool isDead = false;  //죽음 상태 체크 변수
         [SerializeField] private GameObject deathEffectPrefab;  //죽음 효과 프리팹
         [SerializeField] private int rewardGold = 50;   //보상 골드
         #endregion
@@ -55,7 +56,7 @@ namespace MyDefence
                 // 도착 판정 (거리가 아주 가까워지면 도착한 것으로 간주)
                 if (Vector3.Distance(transform.position, target.position) < 0.1f)
                 {
-                    GameData.LoseLife(1);
+                    GameData.LoseLife();
                     // 종점에 도착 완료했으므로 오브젝트 파괴 (Kill)
                     Destroy(gameObject);
                 }
@@ -69,16 +70,25 @@ namespace MyDefence
         //데미지를 받는 메서드
         public void TakeDamage(float damage)
         {
+            if (isDead) return;
+
             hp -= damage;
+            //Debug.Log($"hp : {hp}");
 
             if (hp <= 0)
             {
+                hp = 0;
                 Die();
             }
         }
 
         public void Die()
         {
+            Debug.Log("Die 호출");
+            if(isDead) return;
+
+            isDead = true;
+
             GameData.AddGold(rewardGold);
 
             if (deathEffectPrefab)
@@ -100,7 +110,7 @@ namespace MyDefence
             slowTimer = duration;
         }
 
-        public void BonusDamage(float damage, float interval)
+        /*public void BonusDamage(float damage, float interval)
         {
             laserHitTime += Time.deltaTime;
 
@@ -116,7 +126,7 @@ namespace MyDefence
         { 
             laserHitTime = 0f;
             Debug.Log("레이저 히트 타이머 초기화");
-        }
+        }*/
         #endregion
     }
 }

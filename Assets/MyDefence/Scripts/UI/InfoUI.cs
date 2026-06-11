@@ -30,12 +30,12 @@ namespace MyDefence
 
         private void UpdateGoldUI()
         {
-            moneyText.text = $"Gold : {GameData.Gold}";
+            moneyText.text = $"{GameData.Gold}";
         }
 
         private void UpdateLifeUI()
         {
-            lifeText.text = $"Life : {GameData.Life}";
+            lifeText.text = $"{GameData.Life}";
         }
 
         /*void Update()
