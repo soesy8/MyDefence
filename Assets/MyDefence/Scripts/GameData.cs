@@ -34,22 +34,7 @@ namespace MyDefence
         #region Unity Event Method
         void Awake()
         {
-            //초기화
-            if (gold == 0)
-            {
-                gold = startGold;       //초기 소지금 지급
-            }
-
-            if (life == 0)
-            {
-                life = startLife;       //초기 목숨
-                maxLife = startLife;    //최대 목숨
-            }
-
-            //초기값 자동 갱신
-            OnGoldChanged?.Invoke();
-            OnLifeChanged?.Invoke();
-            //Debug.Log($"Start Gold : Get {gold}gold.");
+            ResetData();
         }
         #endregion
 
@@ -107,6 +92,17 @@ namespace MyDefence
         }
 
         #endregion
+        public void ResetData()
+        {
+            gold = startGold;
+            life = startLife;
+            maxLife = startLife;
+
+            OnGoldChanged?.Invoke();
+            OnLifeChanged?.Invoke();
+        }
+
+
         /*public static GameData Instance { get; private set; }
 
         public int money = 400;
