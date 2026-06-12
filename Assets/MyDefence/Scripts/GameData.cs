@@ -9,13 +9,13 @@ namespace MyDefence
     /// </summary>
     public class GameData : MonoBehaviour
     {
-        //초기 소지 재화
-        //public static int money = 400;
-
         #region Variables
         private static int gold;        //소지금
         [SerializeField] private int startGold = 400;     //초기 소지금
         public static Action OnGoldChanged;     //골드 변환 알림
+
+        private static int wave;
+        public static Action OnWaveChanged;
 
         private static int life;        //목숨
         [SerializeField] private int startLife = 10;      //초기 목숨
@@ -29,7 +29,16 @@ namespace MyDefence
 
         //목숨 읽기 전용 속성
         public static int Life => life;
+
+        //웨이브 속성
+        //public static int Wave { get; set; }
+        public static int Wave
+        {
+            get { return wave; }
+            set { wave = value; }
+        }
         #endregion
+
 
         #region Unity Event Method
         void Awake()
@@ -37,6 +46,7 @@ namespace MyDefence
             ResetData();
         }
         #endregion
+
 
         #region Custom Method
         //골드 추가
@@ -90,8 +100,7 @@ namespace MyDefence
                 //게임 오버 처리
             }
         }
-
-        #endregion
+        //시작 및 재시작 시 데이터 초기화
         public void ResetData()
         {
             gold = startGold;
@@ -100,7 +109,15 @@ namespace MyDefence
 
             OnGoldChanged?.Invoke();
             OnLifeChanged?.Invoke();
+            OnWaveChanged?.Invoke();
         }
+        //웨이브 카운트 증가
+        public static void NextWave()
+        {
+            wave++;
+            OnWaveChanged?.Invoke();
+        }
+        #endregion
 
 
         /*public static GameData Instance { get; private set; }

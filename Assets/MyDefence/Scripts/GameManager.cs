@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace MyDefence
 {
@@ -12,6 +13,7 @@ namespace MyDefence
         //게임 오버 관련 변수
         private bool isGameOver = false;   //게임 오버 체크
         [SerializeField] private GameObject gameOverUI;
+        [SerializeField] private TextMeshProUGUI waveText;
 
         //일시정지 관련 변수
         [SerializeField] private GameObject pauseUI;
@@ -88,14 +90,8 @@ namespace MyDefence
         //ESC - Pause메뉴창 띄우기
         private void TogglePause()
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
         //게임 일시 정지
         private void PauseGame()
@@ -117,6 +113,8 @@ namespace MyDefence
             //게임 오버 처리
             Debug.Log("Game Over!");
             isGameOver = true;
+
+            waveText.text = $"{GameData.Wave} Waves Survied";
 
             //페널티
             //게임오버 UI 보여주기

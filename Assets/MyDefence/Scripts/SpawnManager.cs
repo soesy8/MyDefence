@@ -16,7 +16,6 @@ namespace MyDefence
         public TextMeshProUGUI nextWaveText;     // 화면 상단에 띄울 UI Text
         public TextMeshProUGUI countdownText;     // 화면 상단에 띄울 UI Text
 
-        private int waveNumber = 0;     // 현재 웨이브 번호 (1마리, 2마리...)
 
         void Start()
         {
@@ -40,14 +39,14 @@ namespace MyDefence
                 }
 
                 // 다음 웨이브 때는 스폰 수 증가
-                waveNumber++;
+                GameData.NextWave();
 
                 // 화면 상단의 n번째 웨이브 표시
-                nextWaveText.text = $"Wave : {waveNumber}";
+                nextWaveText.text = $"Wave : {GameData.Wave}";
                 //nextWaveText.text = string.Format("{0:00.00}", waveNumber); //실수(소수점) 이하 출력
 
                 // [기능 3] 현재 웨이브 수만큼 Enemy 스폰 (1 -> 2 -> 3...)
-                for (int i = 0; i < waveNumber; i++)
+                for (int i = 0; i < GameData.Wave; i++)
                 {
                     SpawnEnemy();
                     // 뭉쳐서 나오지 않게 약간의 간격을 둡니다
