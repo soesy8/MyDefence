@@ -84,7 +84,6 @@ namespace MyDefence
 
         public void Die()
         {
-            Debug.Log("Die 호출");
             if(isDead) return;
 
             isDead = true;
@@ -96,9 +95,7 @@ namespace MyDefence
                 GameObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(effect, 2f);
             }
-
             Destroy(gameObject);
-
         }
 
         public void Slow(float percent, float duration)
@@ -109,24 +106,6 @@ namespace MyDefence
             //슬로우 지속시간
             slowTimer = duration;
         }
-
-        /*public void BonusDamage(float damage, float interval)
-        {
-            laserHitTime += Time.deltaTime;
-
-            if (laserHitTime >= interval)
-            {
-                TakeDamage(damage);
-                Debug.Log($"추가 데미지: {damage}");
-                ResetLaserHit();
-            }
-        }
-
-        public void ResetLaserHit() 
-        { 
-            laserHitTime = 0f;
-            Debug.Log("레이저 히트 타이머 초기화");
-        }*/
         #endregion
     }
 }

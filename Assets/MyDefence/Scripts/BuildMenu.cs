@@ -21,11 +21,23 @@ namespace MyDefence
         //머신건 타워 버튼 클릭 시 호출 - public void Selected버튼이름(), Click버튼이름() 등
         public void SelectedMachineGun()
         {
+            /*if (GameData.Gold < buildManager.GetSelectedTower().cost)
+            {
+                Debug.Log($"돈이 부족합니다.");
+                buildManager.SetSelectTower(null);
+                return;
+            }*/
             buildManager.SetSelectTower(buildManager.machineGunPrefab);
             Debug.Log("Machinegun 선택");
         }
         public void ClickRocketLauncher()
         {
+            /*if (GameData.Gold < buildManager.GetSelectedTower().cost)
+            {
+                Debug.Log($"돈이 부족합니다.");
+                buildManager.SetSelectTower(null);
+                return;
+            }*/
             buildManager.SetSelectTower(buildManager.rocketLauncherPrefab);
             Debug.Log("RocketLauncher 선택");
         }
@@ -33,6 +45,12 @@ namespace MyDefence
         //레이저 타워 추가 예정
         public void ClickLaserTower()
         {
+            /*if (GameData.Gold < buildManager.GetSelectedTower().cost)
+            {
+                Debug.Log($"돈이 부족합니다.");
+                buildManager.SetSelectTower(null);
+                return;
+            }*/
             buildManager.SetSelectTower(buildManager.laserTowerPrefab);
             Debug.Log("LaserTower 선택");
         }

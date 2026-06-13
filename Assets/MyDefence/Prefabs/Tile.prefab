@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Tile
   hoverTileMaterial: {fileID: 2100000, guid: 8bd36e6245c61214e8562c6c738883c0, type: 2}
-  _towerPrefab: {fileID: 5246306331095416977, guid: f02063a3f64248e4c9a8311a7238c8c9, type: 3}
+  tileUI: {fileID: 0}

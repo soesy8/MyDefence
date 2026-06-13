@@ -32,34 +32,25 @@ namespace MyDefence
         #endregion
 
         #region Variables
-        //선택한 타워 게임 오브젝트 - 타일에 설치할 프리팹 오브젝트
-        //private GameObject selectedTower;
-
-        //serializable 클래스 사용
         public TowerBlueprint machineGunPrefab;
         public TowerBlueprint rocketLauncherPrefab;
-        
-        //레이저 타워 추가 예정
         public TowerBlueprint laserTowerPrefab;
 
         //선택한 타워 프리팹 오브젝트를 저장할 변수
         private TowerBlueprint selectedTowerBlueprint;
 
-        //타워 프리펩
-        //public GameObject towerPrefab;
+        private Tile selectedTile;
+        public TileUI tileUI;
         #endregion
 
-        /*#region Property
-        //타워 건설 가능 여부 체크, 읽기 전용 - true  건설 불가능, false 건설 가능
-        public bool CannotBuild
+        #region Property
+        public Tile SelectedTile
         {
-            get { return selectedTowerBlueprint == null; }
+            get { return selectedTile; }
+            set { selectedTile = value; }
         }
-        public bool HasBuildCost
-        {
-            get { return GameData.HasGold(selectedTowerBlueprint.cost); }
-        }
-        #endregion*/
+        #endregion
+
 
         #region Custom Method
         //선택한 타워 프리팹 오브젝트 반환
@@ -74,17 +65,9 @@ namespace MyDefence
             selectedTowerBlueprint = blueprint;
             //Debug.Log("머신건 타워를 선택 하였습니다!!");
         }
+
+
+
         #endregion
-
-
-
-
-        /*#region Unity Event Method
-        *//*private void Start()
-        {
-            //머신건 프리팹 선택
-            selectedTower = towerPrefab;
-        }*//*
-        #endregion*/
     }
 }

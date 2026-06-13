@@ -12,5 +12,8 @@ namespace MyDefence
     {
         public GameObject towerPrefab;      //타원 건설에 필요한 프리팹 오브젝트
         public int cost;                    //타워 건설에 필요한 가격
+
+        public GameObject upgradeTowerPrefab;
+        public int upgradeCost;
     }
 }
