@@ -82,9 +82,18 @@ namespace MyDefence
             // 선택 모드
             if (towerOnTile != null)
             {
+                if (buildManager.SelectedTile == this)
+                {
+                    buildManager.SelectedTile = null;
+                    buildManager.tileUI.Hide();
+                    return;
+                }
+
                 buildManager.SelectedTile = this;
                 buildManager.tileUI.Show(this);
-                //Debug.Log("타일 선택");
+                /*buildManager.SelectedTile = this;
+                buildManager.tileUI.Show(this);
+                //Debug.Log("타일 선택");*/
             }
 
             /*//클릭 투과 현상 방지

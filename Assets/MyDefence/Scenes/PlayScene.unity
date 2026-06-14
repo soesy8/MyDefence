@@ -2791,7 +2791,7 @@ GameObject:
   - component: {fileID: 620556907}
   - component: {fileID: 620556906}
   m_Layer: 5
-  m_Name: UpgradeText (1)
+  m_Name: UpgradeCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2836,7 +2836,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999
+  m_text: 150
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3622,6 +3622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 882906108}
   - component: {fileID: 882906109}
+  - component: {fileID: 882906110}
   m_Layer: 0
   m_Name: TileUI
   m_TagString: Untagged
@@ -3657,6 +3658,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfc76b5a0b72c64b9540eaffe20db5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.TowerUI
+--- !u!95 &882906110
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882906107}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61959b00cc855e0459abe07b86be4052, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &948809740
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,7 +4499,7 @@ GameObject:
   - component: {fileID: 1304335034}
   - component: {fileID: 1304335033}
   m_Layer: 5
-  m_Name: UpgradeText
+  m_Name: SellText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5612,7 +5635,7 @@ GameObject:
   - component: {fileID: 1538606909}
   - component: {fileID: 1538606908}
   m_Layer: 5
-  m_Name: UpgradeText (1)
+  m_Name: SellCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

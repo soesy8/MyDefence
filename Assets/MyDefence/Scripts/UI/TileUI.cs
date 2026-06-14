@@ -23,6 +23,7 @@ namespace MyDefence
 
         public void Hide()
         {
+            BuildManager.Instance.SelectedTile = null;
             gameObject.SetActive(false);
         }
     }
