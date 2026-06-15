@@ -1,80 +1,82 @@
-using System.Collections;
 using UnityEngine;
-//using UnityEngine.UI; // UI를 다루기 위해 필요합니다
+using System.Collections;
 using TMPro;
 
 namespace MyDefence
 {
+    //적의 스폰을 관리하는 스크립트
     public class SpawnManager : MonoBehaviour
     {
-        public GameObject enemyPrefab;  // Enemy 프리팹
-        public Transform spawnPoint;    // 시작지점 위치
-        public Transform targetPoint;   // 종점 위치
-        //public Text countdownText;      // 화면 상단에 띄울 UI Text
-        //public Text nextWaveText;       // 화면 상단에 띄울 UI Text
+        #region Variables
+        //적 프리팹 원본 오브젝트 인스턴스
+        public GameObject enemyPrefab;
+        //스폰 위치(position)를 가지고 트랜스폼 인스턴스
+        public Transform start;
 
-        public TextMeshProUGUI nextWaveText;     // 화면 상단에 띄울 UI Text
-        public TextMeshProUGUI countdownText;     // 화면 상단에 띄울 UI Text
+        //스폰 타이머: 5초
+        public float spawnTimer = 5f;   //타이머 기준 시간
+        private float countdown = 0f;   //시간 누적 변수
 
+        //웨이브 카운드
+        private int waveCount = 0;
+        //스폰 지연 시간
+        public float spawnDelay = 0.5f;
 
-        void Start()
+        //UI - TMP의 인스턴스 
+        public TextMeshProUGUI countdownText;
+        #endregion
+
+        #region Unity Event Method
+        private void Start()
         {
-            // 게임이 시작되면 적을 생성하는 코루틴을 실행합니다
-            StartCoroutine(SpawnWaveRoutine());
+            //[1]시작지점 위치에  Enemy 1개를 생성
+            //EnemySpawn();
+
         }
 
-        IEnumerator SpawnWaveRoutine()
+        private void Update()
         {
-            while (true) // 무한히 반복하여 웨이브 진행
+            //[2]시점에서 5초 간격으로 Wave
+            countdown += Time.deltaTime;
+            if (countdown >= spawnTimer)
             {
-                // [기능 2 & 4] 5초 타이머 및 UI 카운트다운 구현
-                float timer = 5f;
-                while (timer > 0)
-                {
-                    countdownText.text = $"Next Wave : {timer:F2}s";
-                    //countdownText.text = string.Format("{0:00.00}", timer); //실수(소수점) 이하 출력
-                    //countdownText.text = Mathf.Round(countdown).ToStringj();  //정수(반올림하여)출력
-                    yield return null; // 다음 프레임까지 대기
-                    timer -= Time.deltaTime; // 시간 차감
-                }
+                //타이머 실행문: Enemy Wave - 
+                StartCoroutine(SpawnWave());
 
-                // 다음 웨이브 때는 스폰 수 증가
-                GameData.NextWave();
+                //타이머 초기화
+                countdown = 0f;
+            }
 
-                // 화면 상단의 n번째 웨이브 표시
-                nextWaveText.text = $"Wave : {GameData.Wave}";
-                //nextWaveText.text = string.Format("{0:00.00}", waveNumber); //실수(소수점) 이하 출력
+            //Debug.Log($"countdown:{countdown}");
+            //countdownText.text = countdown.ToString();
+            //countdownText.text = string.Format("{0:00.00}", countdown); //실수(소수점) 이하 출력
+            countdownText.text = Mathf.Round(spawnTimer - countdown).ToString();       //정수(반올림하여) 출력
 
-                // [기능 3] 현재 웨이브 수만큼 Enemy 스폰 (1 -> 2 -> 3...)
-                for (int i = 0; i < GameData.Wave; i++)
-                {
-                    SpawnEnemy();
-                    // 뭉쳐서 나오지 않게 약간의 간격을 둡니다
-                    yield return new WaitForSeconds(0.5f);
-                }
+        }
+        #endregion
 
-                
+        #region Custom Method
+        //적 웨이브 구현 - 코루틴 함수로 구현
+        IEnumerator SpawnWave()
+        {
+            GameData.Waves++;
+            waveCount++;
+            //Debug.Log($"{waveCount}번째 Wave");
+
+            //waveCount 만큼 적 스폰하기
+            for (int i = 0; i < waveCount; i++)
+            {
+                EnemySpawn();
+                //약간 지연
+                yield return new WaitForSeconds(spawnDelay);
             }
         }
 
-        void SpawnEnemy()
+        //적 스폰하기
+        void EnemySpawn()
         {
-            // 시작지점에 Enemy 생성
-            GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-
-            // 생성된 Enemy에게 목표지점(Target)을 알려줍니다
-            Enemy enemyScript = newEnemy.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                enemyScript.target = targetPoint;
-            }
-            #region 지금은 필요없는 기능
-            //만약에 필드에 남은 enemy의 수나 게임 오버를 체크할 때 쓸 수는 있지만
-            //현재는 굳이 필요가 없는 기능
-            //어차피 인게임에서는 안보이는 부분이기 때문에
-            //GameObject spawner = GameObject.FindGameObjectWithTag("EnemySpawner");
-            //GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity, spawner.transform);
-            #endregion
+            Instantiate(enemyPrefab, start.position, Quaternion.identity);
         }
+        #endregion
     }
 }

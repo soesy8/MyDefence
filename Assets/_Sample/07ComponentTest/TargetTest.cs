@@ -7,19 +7,17 @@ namespace MySample
     /// </summary>
     public class TargetTest : MonoBehaviour
     {
-        #region Variables
+        #region Variabls
         public int a = 10;
         private int b;
         #endregion
 
         #region Unity Event Method
-        void Start()
+        private void Start()
         {
             //필드 초기화
             b = 30;
-
         }
-
         #endregion
 
         #region Custom Method
@@ -33,6 +31,5 @@ namespace MySample
             return b;
         }
         #endregion
-
     }
 }

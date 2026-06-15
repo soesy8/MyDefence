@@ -2,80 +2,86 @@ using UnityEngine;
 
 namespace MyDefence
 {
+    /// <summary>
+    /// 탄환을 관리하는 클래스, 모든 발사체에 들어가는 부모 클래스
+    /// </summary>
     public class Bullet : MonoBehaviour
     {
         #region Variables
-        protected GameObject _target;
+        protected Transform target;    //이동 목표 오브젝트의 트랜스폼 인스턴스
+        public float moveSpeed = 50f;     //탄환 이동 속도
+
+        //타격 효과
+        public GameObject bulletImpactPrefab;   //임팩트 파티클 게임오브젝트 인스턴스
 
         [SerializeField]
-        protected float bulletSpeed = 70.0f;
-
-        [SerializeField]
-        protected GameObject ImpactPrefab;
-
-        [SerializeField]
-        protected int atk = 50;
+        protected float attackDamage = 50f;     //공격력
         #endregion
 
-        #region Property
-        public GameObject Target
+        #region Unity Event Method
+        private void Update()
         {
-            get { return _target; }
-            set { _target = value; }
-        }
-        #endregion
-
-        protected virtual void Update()
-        {
-            if (Target == null)
+            //타겟 검증
+            if(target == null)
             {
-                Destroy(gameObject);
+                Destroy(this.gameObject);
                 return;
             }
 
-            Vector3 dir =
-                (Target.transform.position - transform.position).normalized;
-
-            if (CheckPassPosition())
+            //타겟을 향해 이동 : dir, Time.deltaTime, speed
+            Vector3 dir = target.position - transform.position;
+            //충돌 체크 - 남은거리와 이번 프레임에 이동하는 거리 비교
+            float distance = Vector3.Distance(this.transform.position, target.position);
+            float distanceThisFrame = Time.deltaTime * moveSpeed;
+            if (distance <= distanceThisFrame)
             {
                 HitTarget();
                 return;
             }
 
-            transform.Translate(
-                bulletSpeed * Time.deltaTime * dir, Space.World);
+            transform.Translate(dir.normalized * Time.deltaTime * moveSpeed, Space.World);
         }
+        #endregion
 
-        protected bool CheckPassPosition()
+        #region Custom Method
+        //타겟 설정하기
+        public void SetTarget(Transform _target)
         {
-            float distance = Vector3.Distance(transform.position, Target.transform.position);
-
-            float distanceThisFrame = Time.deltaTime * bulletSpeed;
-
-            return distance <= distanceThisFrame;
+            target = _target;
         }
 
-        // 자식 클래스에서 재정의 가능
+        //타겟 충돌
         protected virtual void HitTarget()
         {
-            if (ImpactPrefab)
+            //뷸렛이 적을 타격할때 뷸렛이 부서져서 파편이 날아가는 효과
+            if(bulletImpactPrefab) //bulletImpactPrefab != null
             {
-                GameObject effectGo = Instantiate(ImpactPrefab, transform.position, Quaternion.identity);
-
-                Destroy(effectGo, 2.0f);
+                GameObject effectGo = Instantiate(bulletImpactPrefab, this.transform.position, Quaternion.identity);
+                //킬 예약
+                Destroy(effectGo, 3f);
             }
 
-            Damage(Target);
-            Destroy(gameObject);
+            //Debug.Log("Hit Target!!!");
+            //타겟에게 데미지 주기
+            Damage(target);
+
+            //탄환 게임오브젝트 kill (Destory)
+            Destroy(this.gameObject);
         }
 
-        protected virtual void Damage(GameObject enemy)
+        //타격 당한 적에게 데미지 주기 - 킬
+        protected virtual void Damage(Transform _target)
         {
-            Enemy targetEnemy = enemy.GetComponent<Enemy>();
+            //Destroy(enemy.gameObject);
 
-            if (targetEnemy == null) { return; }
+            //Enemy 인스턴스 가져오기
+            Enemy enemy = _target.GetComponent<Enemy>();
+            if(enemy != null)
+            {
+                enemy.TakeDamage(attackDamage);
+            }
 
-            targetEnemy.TakeDamage(atk);
         }
+        #endregion
     }
 }

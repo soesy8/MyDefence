@@ -1,5 +1,5 @@
-using UnityEngine;
 using MyDefence;
+using UnityEngine;
 
 namespace MySample
 {
@@ -8,37 +8,43 @@ namespace MySample
     /// </summary>
     public class BulletTest : Bullet
     {
-        #region Var
-        [SerializeField] private float atkDamage = 50f;
+        #region Variables
+        [SerializeField]
+        private float attackDamage = 50f;   //공격력
         #endregion
 
         #region Custom Method
-        protected override void Damage(GameObject targetEnemy)
+        protected override void Damage(Transform _targert)
         {
-            //Debug.Log($"{targetEnemy.ToString()}에게 {atkDamage} 데미지 주기");
-            //Destroy(targetEnemy);
+            //타격 당한 오브젝트에게 데미지 주기
+            Debug.Log($"{_targert.ToString()}에게 {attackDamage}만큼 데미지 주기");
+
+            //원샷 원킬
+            //Destroy(_targert.gameObject);
 
             //데미지 입는 기능이 있는지 체크
             //IDamageable의 인스턴스 가져오기
-            IDamageable damageable = targetEnemy.GetComponent<IDamageable>();
-            if (damageable != null)
+            IDamageable damageable = _targert.GetComponent<IDamageable>();
+            if(damageable != null)
             {
-                damageable.TakeDamage(atkDamage);
+                damageable.TakeDamage(attackDamage);
             }
 
-            //데미지 주기
-            //Monster의 객체 가져오기
-            /*Monster monster = targetEnemy.GetComponent<Monster>();
+            //몬스터에게 {attackDamage}만큼 데미지 주기
+            /*//Monster의 인스턴스 가져오기
+            Monster monster = _targert.GetComponent<Monster>();
             if (monster != null)
             {
-                monster.TakeDamage(atkDamage);
+                monster.TakeDamage(attackDamage);
             }*/
 
-            /*Mob mob = targetEnemy.GetComponent<Mob>();
-            if (mob != null)
+            /*//Mob의 인스턴스 가져오기
+            Mob mob = _targert.GetComponent<Mob>();
+            if(mob != null)
             {
-                mob.TakeDamage(atkDamage);
+                mob.TakeDamage(attackDamage);
             }*/
+
         }
         #endregion
     }
