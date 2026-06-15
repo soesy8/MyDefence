@@ -1,26 +1,29 @@
-using MySample;
-using TMPro;
 using UnityEngine;
+using MyDefence;
+using TMPro;
 using UnityEngine.UI;
 
-namespace MySameple
+namespace MySample
 {
+    /// <summary>
+    /// 돈 계산 예제
+    /// </summary>
     public class MoneyTest : MonoBehaviour
     {
-        [SerializeField]
-        private TextMeshProUGUI goldText;
+        #region Variables
+        //소지금 텍스트 UI 인스턴스
+        public TextMeshProUGUI goldText;
 
         //구매 버튼 인스턴스
         public Button button1000;
         public Button button9000;
+        #endregion
 
-        //public GameObject buttonColor;
-        
-        // Unity Event Method
-        void Update()
+        #region Unity Event Method
+        private void Update()
         {
-            //버튼 상태에 따라 색 변환
-            if (GameDataSample.HasGold(1000))
+            //소지금에 따른 구매 버튼 (컬러)상태 구현
+            if(GameData.HasGold(1000))
             {
                 button1000.image.color = Color.white;
             }
@@ -28,8 +31,8 @@ namespace MySameple
             {
                 button1000.image.color = Color.red;
             }
-
-            if (GameDataSample.HasGold(9000))
+            //소지금에 따른 구매 버튼 (기능)상태 구현
+            if (GameData.HasGold(9000))
             {
                 button9000.interactable = true;
             }
@@ -38,31 +41,40 @@ namespace MySameple
                 button9000.interactable = false;
             }
 
-            //소지금 텍스트 UI
-            goldText.text = $"{GameDataSample.Gold} Gold";
+
+
+            //소지금을 텍스트 UI에 표시
+            goldText.text = GameData.Gold.ToString() + " GOLD";
         }
+        #endregion
 
         #region Custom Method
+        //1000원 벌기 버튼
         public void Save1000()
-        {
-            GameDataSample.AddGold(1000);
-            Debug.Log("+ 1000 Gold");
+        {            
+            GameData.AddGold(1000);
+
+            Debug.Log("1000 Gold Save");
         }
+
+        //1000원 구매 버튼
         public void Purchase1000()
-        {
-            if (GameDataSample.UseGold(1000))
+        {            
+            if(GameData.UseGold(1000))
             {
-                Debug.Log("- 1000 Gold");
+                Debug.Log("1000 아이템 구매");
             }
         }
 
+        //9000원 구매 버튼
         public void Purchase9000()
-        {
-            if (GameDataSample.UseGold(9000))
+        {            
+            if(GameData.UseGold(9000))
             {
-                Debug.Log("- 9000 Gold");
+                Debug.Log("9000 아이템 구매");
             }
         }
         #endregion
+
     }
 }

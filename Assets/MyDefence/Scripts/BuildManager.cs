@@ -3,8 +3,7 @@ using UnityEngine;
 namespace MyDefence
 {
     /// <summary>
-    /// 타원 건설을 관리하는 싱글톤 클래스
-    /// 구조 자체는 공식임
+    /// 타워 건설을 관리하는 싱글톤 클래스
     /// </summary>
     public class BuildManager : MonoBehaviour
     {
@@ -19,55 +18,85 @@ namespace MyDefence
             }
         }
 
-        void Awake()
+        private void Awake()
         {
-            if (instance != null)
+            if(instance != null)
             {
                 Destroy(this.gameObject);
                 return;
             }
+
             instance = this;
             //DontDestroyOnLoad(gameObject);
         }
         #endregion
 
         #region Variables
-        public TowerBlueprint machineGunPrefab;
-        public TowerBlueprint rocketLauncherPrefab;
-        public TowerBlueprint laserTowerPrefab;
+        //선택한 타워 Blueprint - 타일에 설치할 프리팹 오브젝트, 건설비용, ....
+        private TowerBlueprint selectedTower;
 
-        //선택한 타워 프리팹 오브젝트를 저장할 변수
-        private TowerBlueprint selectedTowerBlueprint;
-
-        private Tile selectedTile;
+        //TileUI 인스턴스
         public TileUI tileUI;
+        //선택한 타일의 인스턴스
+        private Tile selectedTile;
         #endregion
 
         #region Property
-        public Tile SelectedTile
+        //타워 건설 가능 여부 체크, 읽기 전용 - true:건설불가능, false:건설 가능
+        public bool CannotBuild
         {
-            get { return selectedTile; }
-            set { selectedTile = value; }
+            get { return selectedTower == null; }
+        }
+
+        //건설 비용 체크
+        public bool HasBuildCost
+        {
+            get { return GameData.HasGold(selectedTower.cost);  }
         }
         #endregion
 
+        #region Unity Event Method
+        #endregion
 
         #region Custom Method
-        //선택한 타워 프리팹 오브젝트 반환
+        //선택한 타워 TowerBlueprint 인스턴스 반환
         public TowerBlueprint GetSelectedTower()
         {
-            return selectedTowerBlueprint;
+            return selectedTower;
         }
 
-        //외부에서 호출하여 타워를 선택해줄 메서드
-        public void SetSelectTower(TowerBlueprint blueprint)
+        //선택한 타워의 TowerBlueprint를 매개변수로 받아 저장
+        public void SetSelectedTower(TowerBlueprint tower)
         {
-            selectedTowerBlueprint = blueprint;
-            //Debug.Log("머신건 타워를 선택 하였습니다!!");
+            selectedTower = tower;
         }
 
+        //타일을 선택 - 선택한 타일의 인스턴스를 매개변수로 전달
+        public void SelectTile(Tile tile)
+        {
+            //이미 선택되어 있다 && 이미 선택한 타일과 지금 선택한 타일이 같다면
+            if(selectedTile == tile)
+            {
+                DeSelectTile();
+                return;
+            }
 
+            //설치될 타워 정보 초기화
+            selectedTower = null;
 
+            selectedTile = tile;
+            tileUI.ShowTileUI(tile);
+        }
+
+        //타일 선택 해제
+        public void DeSelectTile()
+        {
+            //설치될 타워 정보 초기화
+            selectedTower = null;
+
+            selectedTile = null;
+            tileUI.HideTileUI();
+        }
         #endregion
     }
 }

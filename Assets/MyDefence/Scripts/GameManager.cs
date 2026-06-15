@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
 
 namespace MyDefence
 {
@@ -10,136 +8,79 @@ namespace MyDefence
     public class GameManager : MonoBehaviour
     {
         #region Variables
-        //게임 오버 관련 변수
-        private bool isGameOver = false;   //게임 오버 체크
-        [SerializeField] private GameObject gameOverUI;
-        [SerializeField] private TextMeshProUGUI waveText;
+        //게임오버 체크
+        private bool isGameOver = false;
 
-        //일시정지 관련 변수
-        [SerializeField] private GameObject pauseUI;
-        private bool isPaused = false;
-
-        [SerializeField] private GameData gameData;
+        //게임오버 UI 게임오브젝트 인스턴스
+        public GameObject gameOverUI;
 
         //치트 체크 변수
         [SerializeField]
         private bool isCheating = false;
         #endregion
 
-        #region Unity Event Methods
-        void Start()
+        #region Unity Event Method
+        private void Start()
         {
+            //초기화
             isGameOver = false;
         }
-        void Update()
+
+        private void Update()
         {
-            if (isGameOver) return;
+            //게임오버시 더이상 진행하지 않도록 막는다
+            if (isGameOver)
+                return;
 
             //게임 오버 체크
-            if (GameData.Life <= 0)
+            if(GameData.Lives <= 0)
             {
                 GameOver();
             }
-
-            //일시정지
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                TogglePause();
-            }
-
-
 
             //치트키
-            //골드 치트키
-            if (Input.GetKeyDown(KeyCode.M))
+            if(Input.GetKeyDown(KeyCode.M))
             {
-                Debug.Log("Money Cheat");
-                MoneyCheat();
+                ShowMeTheMoney();
             }
-            //게임오버 치트키
-            if (Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKeyDown(KeyCode.O) && isCheating)
             {
                 GameOver();
             }
         }
         #endregion
 
-
         #region Custom Method
-        //일시정지 - 게임 재시작 버튼
-        public void ContinueGame()
-        {
-            ResumeGame();
-            Debug.Log("Continue");
-        }
-        //일시정지, 게임오버 - 메인 메뉴 버튼
-        public void GoToMainMenu()
-        {
-            ResumeGame();
-            gameOverUI.SetActive(false);
-            Debug.Log("Goto Main");
-        }
-        //게임오버 - 다시하기 버튼
-        public void ReStartGame()
-        {
-            ResumeGame();
-            gameData.ResetData();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        //ESC - Pause메뉴창 띄우기
-        private void TogglePause()
-        {
-            if (isPaused) ResumeGame();
-            else PauseGame();
-        }
-        //게임 일시 정지
-        private void PauseGame()
-        {
-            isPaused = true;
-            pauseUI.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        //게임 일시 정지 해제
-        private void ResumeGame()
-        {
-            isPaused = false;
-            pauseUI.SetActive(false);
-            Time.timeScale = 1f;
-        }
-        //게임 오버
+        //게임오버 처리
         void GameOver()
         {
-            //게임 오버 처리
-            Debug.Log("Game Over!");
+            Debug.Log("Game Over!!!!");
             isGameOver = true;
 
-            waveText.text = $"{GameData.Wave} Waves Survied";
-
-            //페널티
-            //게임오버 UI 보여주기
+            //벌
+            //게임오버 UI 보여주기(활성화)
             gameOverUI.SetActive(true);
-
-            Time.timeScale = 0f;
         }
         #endregion
 
-
         #region Cheating
-        void MoneyCheat()
-        {
-            //10만 골드 지급
-            GameData.AddGold(100000);
-            Debug.Log($"+ 100,000 Gold");
-        }
-
-        
-
-        //레벨치팅
-        void LevelCheat()
+        //골드 치팅
+        void ShowMeTheMoney()
         {
             //치팅 체크
-            if (isCheating == false) return;
+            if (isCheating == false)
+                return;
+
+            //10만골드 지급
+            GameData.AddGold(100000);
+        }
+
+        //레벨 치팅
+        void LevelupCheat()
+        {
+            //치팅 체크
+            if (isCheating == false)
+                return;
 
             //level++;
         }

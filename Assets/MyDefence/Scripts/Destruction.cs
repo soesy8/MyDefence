@@ -8,12 +8,12 @@ namespace MyDefence
     public class Destruction : MonoBehaviour
     {
         //지정한 시간
-        public float destructionTime = 1.0f;
+        public float destructTime = 1f;
 
-        void Start()
+        private void Start()
         {
             //지정한 시간에 킬 예약
-            Destroy(this.gameObject, destructionTime);
+            Destroy(this.gameObject, destructTime);
         }
     }
 }

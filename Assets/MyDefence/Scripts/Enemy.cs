@@ -2,109 +2,113 @@ using UnityEngine;
 
 namespace MyDefence
 {
+    /// <summary>
+    /// Enemy(적)을 관리하는 클래스
+    /// </summary>
     public class Enemy : MonoBehaviour
     {
+        //필드 선언부
         #region Variables
-        //이동 관련 변수
-        public Transform target; // 이동할 종점(Target)의 위치
-        public float speed = 5f;  // 이동 속도
-        private float curSpeed; // 현재 이동 속도
-        private float slowAmount = 1f; // 슬로우 계수 변수
-        private float slowTimer = 0f; // 슬로우 타이머 변수
-        
-        //추가 데미지 변수
-        //private float laserHitTime = 0f;
+        //이동 목표 위치를 가지고 있는 오브젝트
+        private Transform target;
 
-        //체력 관련 변수
-        [SerializeField] private float maxHp = 100f;   //최대 체력
-        private float hp;     //현재 체력
+        //Enemy 이동 속도
+        private float speed;            //현재 이동 속도
+        [SerializeField]
+        private float startSpeed = 5f;  //이동속도 초기값
 
-        //죽음 효과 관련 변수
-        private bool isDead = false;  //죽음 상태 체크 변수
-        [SerializeField] private GameObject deathEffectPrefab;  //죽음 효과 프리팹
-        [SerializeField] private int rewardGold = 50;   //보상 골드
+        //체력
+        private float health;               //현재 체력
+        [SerializeField]
+        private float startHealth = 100f;   //체력 초기값
+
+        //죽음 이펙트
+        public GameObject deathEffectPrefab;
+
+        //보상
+        [SerializeField]
+        private int rewardGold = 50;        //보상 골드
         #endregion
 
-        #region Unity Evnet Method
-        void Start()
-        {
-            hp = maxHp;   //hp 초기화
-            curSpeed = speed; //현재 속도 초기화
+        //유니티 이벤트 함수 구현부
+        #region Unity Event Method
+        private void Start()
+        {            
+            //타겟(이동 목적지) 찾아오기
+            target = GameObject.FindGameObjectWithTag("End").transform;
+
+            //초기화
+            health = startHealth;
+            speed = startSpeed;
         }
 
-        void Update()
+        private void Update()
         {
-            if (slowTimer > 0)
-            {
-                slowTimer -= Time.deltaTime;
-            }
-            else
-            {
-                slowAmount = 1f;
-            }
+            //타겟을 향해 이동 (dir(방향), Time.deltaTime, speed)
+            //이동 방향 구하기 : 목표지점 - 현재지점, 도착 예정위치 - 출발(현재) 위치
+            Vector3 dir = target.position - this.transform.position;
+            this.transform.Translate(dir.normalized * Time.deltaTime * speed, Space.World);
 
-            curSpeed = speed * slowAmount;
-
-            // Target이 설정되어 있다면 이동하기
-            if (target != null)
+            //도착 판정
+            //타겟과 enemy와의 거리를 구해서 일정거리(0.2f) 안에 들어오면 도착이라고 판정한다
+            float distance = Vector3.Distance(target.position, this.transform.position);
+            if(distance <= 0.2f)
             {
-                Vector3 dir = (target.position - transform.position).normalized;
-                // 현재 위치에서 target 위치로 speed 속도로 이동
-                //transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-                transform.Translate(curSpeed * Time.deltaTime * dir);
-
-                // 도착 판정 (거리가 아주 가까워지면 도착한 것으로 간주)
-                if (Vector3.Distance(transform.position, target.position) < 0.1f)
-                {
-                    GameData.LoseLife();
-                    // 종점에 도착 완료했으므로 오브젝트 파괴 (Kill)
-                    Destroy(gameObject);
-                }
+                ArriveAtTarget();
             }
 
-
+            //속도 초기화
+            speed = startSpeed;
         }
         #endregion
 
+        //유저 구현 함수
         #region Custom Method
-        //데미지를 받는 메서드
+        //Enemy가 종점에 도착시 처리 내용 구현
+        void ArriveAtTarget()
+        {
+            //종점 도착 처리 
+            GameData.UseLife();
+
+            //Debug.Log("종점에 도착 했다");
+            Destroy(this.gameObject);
+        }
+
+        //데미지 입기 처리
         public void TakeDamage(float damage)
         {
-            if (isDead) return;
+            health -= damage;
+            //Debug.Log($"health: {health}");
 
-            hp -= damage;
-            //Debug.Log($"hp : {hp}");
-
-            if (hp <= 0)
+            //죽음 체크
+            if(health <= 0f)
             {
-                hp = 0;
-                Die();
+                Death();
             }
         }
 
-        public void Die()
+        //죽음 처리
+        private void Death()
         {
-            if(isDead) return;
+            //이펙트 효과(vfx, sfx)
+            if(deathEffectPrefab != null)
+            {
+                GameObject effectGo = Instantiate(deathEffectPrefab, this.transform.position, Quaternion.identity);
+                Destroy(effectGo, 3f);
+            }
 
-            isDead = true;
-
+            //보상 처리(골드, 경험치, 아이템...)
             GameData.AddGold(rewardGold);
 
-            if (deathEffectPrefab)
-            {
-                GameObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
-                Destroy(effect, 2f);
-            }
-            Destroy(gameObject);
+            //kill
+            Destroy(this.gameObject);
         }
 
-        public void Slow(float percent, float duration)
+        //이동속도 느리게
+        public void Slow(float rate) //40%
         {
-            //슬로우 수치
-            slowAmount = 1f - percent;
-
-            //슬로우 지속시간
-            slowTimer = duration;
+            speed = startSpeed * (1 - rate); // 5 -> 3 -> 3
+            //Debug.Log($"speed: {speed}");
         }
         #endregion
     }

@@ -4,64 +4,72 @@ using UnityEngine.UI;
 
 namespace MyDefence
 {
+    /// <summary>
+    /// 타일 UI를 관리하는 클래스
+    /// 선택된 타일의 정보(타일 위치, 타일 상태, 타일 blueprint)를 가져와서 구현
+    /// </summary>
     public class TileUI : MonoBehaviour
     {
-        //var
+        #region Variables
+        //타일 UI 오브젝트 - offset
+        public GameObject ui;
+
+        //선택된 타일 인스턴스
+        private Tile selectedTile;
+
+        //UI
         public TextMeshProUGUI upgradeCostText;
         public TextMeshProUGUI sellCostText;
 
-        private Tile selectedTile;
-
         public Button upgradeButton;
+        #endregion
 
-        //Unity Event Method
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
-        //Custom Method
-        public void Upgrade()
-        {
-            Tile tile = BuildManager.Instance.SelectedTile;
-
-            if (tile != null) tile.UpgradeTower();
-            Hide();
-        }
-        public void Sell()
-        {
-            Tile tile = BuildManager.Instance.SelectedTile;
-            
-            if(tile != null) tile.SellTower();
-            Hide();
-        }
-        
-        public void Show(Tile tile)
+        #region Custom Method
+        //타일 UI 보여주기, UI 셋팅
+        public void ShowTileUI(Tile tile)
         {
             selectedTile = tile;
+            //선택된 타일의 위치로 조정
+            this.transform.position = selectedTile.transform.position;
 
-            transform.position = tile.transform.position;
-
-            if (tile.IsUpgrade == true)
+            //UI 셋팅
+            //업그레이드 체크
+            if(tile.IsUpgrade == true)
             {
                 upgradeCostText.text = "DONE";
                 upgradeButton.interactable = false;
             }
             else
             {
-                upgradeCostText.text = selectedTile.towerBlueprint.upgradeCost.ToString() + "G";
+                upgradeCostText.text = selectedTile.blueprint.upgradeCost.ToString() + "G";
                 upgradeButton.interactable = true;
             }
 
-            sellCostText.text = selectedTile.towerBlueprint.GetSellCost().ToString() + "G";
+            sellCostText.text = selectedTile.blueprint.GetSellCost().ToString() + "G";
 
-            gameObject.SetActive(true);
+            ui.SetActive(true);
         }
 
-        public void Hide()
+        //타일 UI 숨기기
+        public void HideTileUI()
         {
-            BuildManager.Instance.SelectedTile = null;
-            gameObject.SetActive(false);
+            selectedTile = null;
+            ui.SetActive(false);
         }
+
+        //타워 업그레이드
+        public void UpgradeTower()
+        {
+            //Debug.Log("선택한 타일의 타워 업그레이드");
+            selectedTile.UpgradeTower();
+        }
+
+        //타워 판매하기(제거하기)
+        public void SellTower()
+        {
+            //Debug.Log("선택한 타일의 타워 판매하기");
+            selectedTile.SellTower();
+        }
+        #endregion
     }
 }

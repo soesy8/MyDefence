@@ -1,141 +1,100 @@
 using UnityEngine;
-using System;
 
 namespace MyDefence
 {
     /// <summary>
     /// 게임 데이터 변수를 관리하는 클래스
-    /// 게임머니, 목숨
+    /// 게임머니
     /// </summary>
     public class GameData : MonoBehaviour
     {
         #region Variables
-        private static int gold;        //소지금
-        [SerializeField] private int startGold = 400;     //초기 소지금
-        public static Action OnGoldChanged;     //골드 변환 알림
+        private static int gold;       //소지금
+        public int startGold = 400;    //초기 소지금
 
-        private static int wave;
-        public static Action OnWaveChanged;
+        private static int lives;                       //생명 갯수
+        [SerializeField] private int startLives = 10;   //초기 생명 갯수
 
-        private static int life;        //목숨
-        [SerializeField] private int startLife = 10;      //초기 목숨
-        private static int maxLife;
-        public static Action OnLifeChanged;     //목숨 변환 알림
+        private static int waves;       //Wave 카운트
         #endregion
 
         #region Property
         //소지금 읽기 전용 속성
-        public static int Gold => gold;
-
-        //목숨 읽기 전용 속성
-        public static int Life => life;
-
-        //웨이브 속성
-        //public static int Wave { get; set; }
-        public static int Wave
+        public static int Gold
         {
-            get { return wave; }
-            set { wave = value; }
+            get {  return gold; }
+        }
+
+        //라이프 읽기 전용 속성
+        public static int Lives => lives;
+
+        //웨이브 카운트
+        public static int Waves
+        {
+            get { return waves; }
+            set { waves = value; }
         }
         #endregion
-
 
         #region Unity Event Method
-        void Awake()
+        private void Start()
         {
-            ResetData();
+            //초기화
+            gold = startGold;       //초기 소지금을 지급
+            lives = startLives;     //초기 생명 갯수
+            waves = 0;              //웨이브 카운트
+            //Debug.Log($"초기 소지금 {startGold}Gold를 지급하였습니다");
         }
         #endregion
 
-
         #region Custom Method
-        //골드 추가
+        //돈 벌기
         public static void AddGold(int amount)
         {
             gold += amount;
-            OnGoldChanged?.Invoke();    //골드 변환 알림
+            //Debug.Log($"현재 소지금: {gold}");
         }
 
-        //골드 사용, 사용 여부를 bool 반환
+        //돈 쓰기, 결재 여부를 bool 반환
         public static bool UseGold(int amount)
         {
-            //소지금 체크
-            if (gold < amount)
+            //돈 부족 체크
+            if(gold < amount)
             {
-                Debug.Log("Not Enough Money");
+                //Debug.Log("소지금이 부족합니다");
                 return false;
             }
+
             gold -= amount;
-            OnGoldChanged?.Invoke();    //골드 변환 알림
             return true;
         }
 
-        //소지금 체크, 결재 가능 여부 bool형 반환
+        //소지금 체크, 결재 가능 여부 bool 반환
         public static bool HasGold(int amount)
         {
             return gold >= amount;
         }
 
-        //목숨 추가
+        //생명 추가하기
+        //ToDo : Max Lives 체크
         public static void AddLife(int amount)
         {
-            life += amount;
-            //maxLife 체크
-            if (life >= maxLife)
+            lives += amount;
+        }
+
+        //생명 사용하기
+        public static void UseLife(int amount = 1)
+        {
+            lives -= amount;
+            //Debug.Log($"현재 라이프: {lives}");
+
+            if (lives <= 0)
             {
-                life = maxLife;
+                lives = 0;
             }
-            OnLifeChanged?.Invoke();    //목숨 변환 알림
-        }
-
-
-        //목숨 감소, 목숨이 0이하가 되면 게임 오버
-        public static void LoseLife(int amount = 1)
-        {
-            life -= amount;
-            OnLifeChanged?.Invoke();    //목숨 변환 알림
-            if (life <= 0)
-            {
-                Debug.Log("Game Over");
-                //게임 오버 처리
-            }
-        }
-        //시작 및 재시작 시 데이터 초기화
-        public void ResetData()
-        {
-            gold = startGold;
-            life = startLife;
-            maxLife = startLife;
-
-            OnGoldChanged?.Invoke();
-            OnLifeChanged?.Invoke();
-            OnWaveChanged?.Invoke();
-        }
-        //웨이브 카운트 증가
-        public static void NextWave()
-        {
-            wave++;
-            OnWaveChanged?.Invoke();
         }
         #endregion
 
 
-        /*public static GameData Instance { get; private set; }
-
-        public int money = 400;
-
-        void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-            
-        }*/
     }
 }

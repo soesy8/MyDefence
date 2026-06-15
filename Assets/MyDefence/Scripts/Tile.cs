@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,189 +9,211 @@ namespace MyDefence
     public class Tile : MonoBehaviour
     {
         #region Variables
-        //빌드 매니저 싱글톤 인스턴스
+        //빌드매니저 싱글톤 인스턴스
         private BuildManager buildManager;
 
-        public Material hoverTileMaterial;
-        private Renderer rendPrefab;
+        //타일에 설치되는 타워의 Blueprint 변수
+        //(건설 타워 정보, 업그레이 정보, 셀 정보)
+        public TowerBlueprint blueprint;
+
+        //타일에 설치되어 있는 타워의 게임오브젝트 인스턴스
+        private GameObject tower;
+
+        //타일 오브젝트의 랜더러 컴포넌트 인스턴스
+        private Renderer renderer;
+
+        //마우스가 들어가면 바뀌는 컬러
+        public Color hoverColor;
+        //마우스가 나오면 바뀌는 컬러 (메터리얼이 원래 가지고 있던 컬러)
+        private Color originColor;
+
+        //메터릴얼 변경
+        public Material hoverMaterial;
         private Material originMaterial;
 
-        private GameObject towerOnTile;
-        public TowerBlueprint towerBlueprint;
+        //업그레이드 체크
+        private bool isUpgrade;
 
-        public GameObject tileUI;
-
-        private bool isUpgrade = false;
+        //이펙트
+        public GameObject buildEffectPrefab;    //건설 또는 업그레이드시 이펙트 플레이
+        public GameObject sellEffectPrefab;     //판매시 이펙트 플레이
         #endregion
 
+        #region Property
+        //업그레이드 비용 체크
+        public bool HasUpgradeCost
+        {
+            get { return GameData.HasGold(blueprint.upgradeCost); }
+        }
+
+        //업그레이드 체크
         public bool IsUpgrade => isUpgrade;
-
-        public GameObject buildEffectPrefab;
-        public GameObject sellEffectPrefab;
-
+        #endregion
 
         #region Unity Event Method
-        void Start()
+        private void Start()
         {
-            //참조 - 변수를 private으로 돌리고 컴포넌트를 가져와서 사용
+            //참조
             buildManager = BuildManager.Instance;
-            rendPrefab = GetComponent<Renderer>();
+            renderer = this.transform.GetComponent<Renderer>();
 
-            //필드 초기화 - 기존 메테리얼 저장
-            if (rendPrefab != null)
-            {
-                originMaterial = rendPrefab.material;
-            }
-
+            //필드 초기화
+            //메터리얼이 원래 가지고 있던 컬러를 저장
+            //originColor = renderer.material.color;
+            originMaterial = renderer.material;
             isUpgrade = false;
         }
 
-        //타일 위에 마우스가 위치했을 때
-        void OnMouseEnter()
+        private void OnMouseEnter()
         {
-            //클릭 투과 현상 방지
-            if (EventSystem.current.IsPointerOverGameObject()) { return; }
-
-            if (buildManager.GetSelectedTower() != null)
+            //UI로 가려져 있는지 검증
+            if (EventSystem.current.IsPointerOverGameObject() == true)
             {
-                if (rendPrefab != null && hoverTileMaterial != null)
-                {
-                    //Debug.Log("들어옴");
-                    rendPrefab.material = hoverTileMaterial;
-                }
+                //변경 실패
+                return;
             }
+
+            //타워 선택여부 검증
+            if (buildManager.CannotBuild)
+            {
+                return;
+            }
+
+            //Debug.Log("타일에 들어간다, 연두색 변경");
+            //renderer.material.color = hoverColor;
+            renderer.material = hoverMaterial;
         }
 
-        //타일 위에서 마우스가 나갔을 때
         void OnMouseExit()
         {
-            if (rendPrefab != null && hoverTileMaterial != null)
-            {
-                //Debug.Log("나감");
-                //원래 색상으로 변경
-                rendPrefab.material = originMaterial;
-            }
+            //Debug.Log("타일에 나온다, 원래 컬러로 변경 ");
+            //renderer.material.color = originColor;
+            renderer.material = originMaterial;
         }
 
-        //타일을 클릭했을 때
-        void OnMouseDown()
+        private void OnMouseDown()
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-
-            // 설치 모드
-            if (buildManager.GetSelectedTower() != null)
+            //UI로 가려져 있는지 검증
+            if(EventSystem.current.IsPointerOverGameObject() == true)
             {
-                BuildTower();
-                //BuildEffect();
+                //설치 실패
                 return;
             }
 
-            // 선택 모드
-            if (towerOnTile != null)
+            //현재 타일에 타워가 설치되었는지 여부
+            if (tower != null)
             {
-                if (buildManager.SelectedTile == this)
-                {
-                    buildManager.SelectedTile = null;
-                    buildManager.tileUI.Hide();
-                    return;
-                }
-
-                buildManager.SelectedTile = this;
-                buildManager.tileUI.Show(this);
-                /*buildManager.SelectedTile = this;
-                buildManager.tileUI.Show(this);
-                //Debug.Log("타일 선택");*/
-            }
-
-            /*//클릭 투과 현상 방지
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-
-            if (buildManager.GetSelectedTower() == null) return;
-
-            if (GameData.Gold < buildManager.GetSelectedTower().cost)
-            {
-                Debug.Log($"돈이 부족합니다.");
-                buildManager.SetSelectTower(null);
+                Debug.Log("타워가 설치되어있어 타일 UI를 보여준다");
+                buildManager.SelectTile(this);
                 return;
             }
 
-            BuildTower();*/
+            //타워 선택 여부 검증
+            if (buildManager.CannotBuild)
+            {
+                //설치 실패
+                Debug.Log("선택한 타워가 없어 설치하지 못했습니다");
+                return;
+            }
+
+            //타워 정보를 저장
+            blueprint = buildManager.GetSelectedTower();
+
+            //타워 건설
+            BuildTower();
         }
         #endregion
 
         #region Custom Method
-        public void BuildTower()
+        //타워 건설
+        void BuildTower()
         {
-            if (towerOnTile != null) return;
+            //건설 비용 체크
+            if(buildManager.HasBuildCost == false)
+            {
+                Debug.Log("건설 비용이 부족합니다");
+                return;
+            }
 
-            TowerBlueprint blueprint = buildManager.GetSelectedTower();
-
-            GameObject tower
-                    = Instantiate(blueprint.towerPrefab, transform.position + new Vector3(0, 0.05f, 0),
-                    Quaternion.identity);
-            towerOnTile = tower;
-            towerBlueprint = blueprint;
-
+            //건설 비용 결재
             GameData.UseGold(blueprint.cost);
 
-            buildManager.SetSelectTower(null);
+            //Debug.Log("타일을 선택한다, 선택한 타워 설치");
+            Vector3 offset = new Vector3(0f, 0.05f, 0f);
+            tower = Instantiate(blueprint.prefab, this.transform.position + offset, Quaternion.identity);
+
+            //이펙트: vfx, sfx
+            if (buildEffectPrefab != null)
+            {
+                GameObject effectGo = Instantiate(buildEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(effectGo, 3f);
+            }
+
+            //초기화
+            buildManager.SetSelectedTower(null);
+            //Debug.Log($"건설하고 남은 소지금: {GameData.Gold}");
         }
 
+        //타워 업그레이드
         public void UpgradeTower()
         {
-            if (towerBlueprint.upgradeTowerPrefab == null)
+            //Debug.Log("설치된 타워 업그레이드");
+            //업그레이드 비용 체크
+            if (HasUpgradeCost == false)
+            {
+                Debug.Log("업그레드 건설 비용이 부족합니다");
                 return;
+            }
 
-            if (GameData.Gold < towerBlueprint.upgradeCost)
-                return;
+            //업그레드 비용 결재
+            GameData.UseGold(blueprint.upgradeCost);
+
+            //기존 타워 제거
+            Destroy(tower);
 
             isUpgrade = true;
-            Destroy(towerOnTile);
 
-            GameObject tower = Instantiate(
-                towerBlueprint.upgradeTowerPrefab,
-                transform.position + new Vector3(0, 0.05f, 0),
-                Quaternion.identity);
+            //Debug.Log("타일을 선택한다, 선택한 타워 설치");
+            Vector3 offset = new Vector3(0f, 0.05f, 0f);
+            tower = Instantiate(blueprint.upgradePrefab, this.transform.position + offset, Quaternion.identity);
 
-            //BuildEffect();
+            //이펙트: vfx, sfx
+            if (buildEffectPrefab != null)
+            {
+                GameObject effectGo = Instantiate(buildEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(effectGo, 3f);
+            }
 
-            towerOnTile = tower;
-
-            GameData.UseGold(towerBlueprint.upgradeCost);
-
-            buildManager.SetSelectTower(null);
-
+            //buildManager 초기화            
+            buildManager.DeSelectTile();
+            //Debug.Log($"건설하고 남은 소지금: {GameData.Gold}");
         }
 
+        //타워 판매하기
         public void SellTower()
         {
-            GameData.AddGold(towerBlueprint.GetSellCost());
-            //SellEffect();
-            Destroy(towerOnTile);
+            //Debug.Log("설치된 타워 판매하기");
+
+            //판매대금 받기
+            GameData.AddGold(blueprint.GetSellCost());
+
+            //타일 타워 초기화            
+            Destroy(tower); //건설된 타워 제거
+            blueprint = null;
 
             isUpgrade = false;
-            towerOnTile = null;
-            //Debug.Log("타워 판매 기능");
-        }
 
-        public void BuildEffect()
-        {
-            /*if (buildEffectPrefab != null)
+            //이펙트: vfx, sfx
+            if (sellEffectPrefab != null)
             {
-                //GameObject effectGo = Instantiate(this, transform.position, Quaternion.identity);
-                //Destroy(effectGO, 2f);
-            }*/
-        }
+                GameObject effectGo = Instantiate(sellEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(effectGo, 3f);
+            }
 
-        public void SellEffect()
-        {
-            /*if (sellEffectPrefab != null)
-            {
-                //GameObject effectGo = Instantiate(this, transform.position, Quaternion.identity);
-                //Destroy(effectGO, 2f);
-            }*/
+            //buildManager 초기화
+            buildManager.DeSelectTile();
         }
         #endregion
+
     }
 }
