@@ -8,6 +8,7 @@ namespace MyDefence
         //공격 범위 안에 있는 가장 가까운 적
         private GameObject target;
         //타워 공격 범위
+        [SerializeField]
         private float atkRange = 14.0f;
 
         //터렛의 회전 속도

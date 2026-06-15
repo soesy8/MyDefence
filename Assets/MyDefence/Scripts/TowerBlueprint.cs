@@ -15,5 +15,7 @@ namespace MyDefence
 
         public GameObject upgradeTowerPrefab;
         public int upgradeCost;
+
+        public int GetSellCost() => cost / 2;
     }
 }

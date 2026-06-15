@@ -5,11 +5,11 @@ namespace MySample
 {
     /// <summary>
     /// 라이트 애니메이션을 1초마다 랜덤하게 플레이 시킨다
+    /// Animator의 매개변수 LightMode 값을 랜덤하게 세팅
     /// </summary>
     public class AnimatorTest : MonoBehaviour
     {
-        #region Var
-        //애니메이터 컴포넌트의 객체 변수?
+        #region Variables
         private Animator animator;
 
         //라이트모드 매개변수
@@ -24,12 +24,14 @@ namespace MySample
         #region Unity Event Method
         private void Awake()
         {
+            //참조
             animator = GetComponent<Animator>();
         }
 
         void Start()
         {
             StartCoroutine(FlameRoutine());
+            //InvokeRepeating("RandomFlameAnimation", 0f, 1f);
         }
         #endregion
 

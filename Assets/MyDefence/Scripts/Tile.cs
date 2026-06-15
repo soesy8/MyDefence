@@ -18,11 +18,17 @@ namespace MyDefence
         private Material originMaterial;
 
         private GameObject towerOnTile;
-        private TowerBlueprint towerBlueprint;
+        public TowerBlueprint towerBlueprint;
 
         public GameObject tileUI;
+
+        private bool isUpgrade = false;
         #endregion
 
+        public bool IsUpgrade => isUpgrade;
+
+        public GameObject buildEffectPrefab;
+        public GameObject sellEffectPrefab;
 
 
         #region Unity Event Method
@@ -37,6 +43,8 @@ namespace MyDefence
             {
                 originMaterial = rendPrefab.material;
             }
+
+            isUpgrade = false;
         }
 
         //타일 위에 마우스가 위치했을 때
@@ -76,6 +84,7 @@ namespace MyDefence
             if (buildManager.GetSelectedTower() != null)
             {
                 BuildTower();
+                //BuildEffect();
                 return;
             }
 
@@ -110,7 +119,9 @@ namespace MyDefence
 
             BuildTower();*/
         }
+        #endregion
 
+        #region Custom Method
         public void BuildTower()
         {
             if (towerOnTile != null) return;
@@ -136,6 +147,7 @@ namespace MyDefence
             if (GameData.Gold < towerBlueprint.upgradeCost)
                 return;
 
+            isUpgrade = true;
             Destroy(towerOnTile);
 
             GameObject tower = Instantiate(
@@ -143,12 +155,44 @@ namespace MyDefence
                 transform.position + new Vector3(0, 0.05f, 0),
                 Quaternion.identity);
 
+            //BuildEffect();
+
             towerOnTile = tower;
 
             GameData.UseGold(towerBlueprint.upgradeCost);
+
+            buildManager.SetSelectTower(null);
+
         }
 
-        
+        public void SellTower()
+        {
+            GameData.AddGold(towerBlueprint.GetSellCost());
+            //SellEffect();
+            Destroy(towerOnTile);
+
+            isUpgrade = false;
+            towerOnTile = null;
+            //Debug.Log("타워 판매 기능");
+        }
+
+        public void BuildEffect()
+        {
+            /*if (buildEffectPrefab != null)
+            {
+                //GameObject effectGo = Instantiate(this, transform.position, Quaternion.identity);
+                //Destroy(effectGO, 2f);
+            }*/
+        }
+
+        public void SellEffect()
+        {
+            /*if (sellEffectPrefab != null)
+            {
+                //GameObject effectGo = Instantiate(this, transform.position, Quaternion.identity);
+                //Destroy(effectGO, 2f);
+            }*/
+        }
         #endregion
     }
 }
