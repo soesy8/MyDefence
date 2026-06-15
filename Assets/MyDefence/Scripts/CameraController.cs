@@ -24,7 +24,11 @@ namespace MyDefence
             //카메라 이동 기능 막기
             //토글버튼 누르면 카메라 이동을 막는다 : isCannotMove:false -> isCannotMove:true
             //토글버튼 다시 누르면 카메라 이동한다 : isCannotMove:true -> isCannotMove:false
+<<<<<<< HEAD
             if (Input.GetButtonDown("Esc Toogle"))
+=======
+            if (Input.GetKeyDown(KeyCode.Escape))    
+>>>>>>> 68678c1c7b9e45157cde021ca297380cf799d818
             {
                 //Debug.Log("토글 버튼이 눌렸다");                
                 isCannotMove = !isCannotMove;
