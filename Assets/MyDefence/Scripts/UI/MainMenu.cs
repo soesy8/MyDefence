@@ -8,7 +8,7 @@ namespace MyDefence
     /// </summary>
     public class MainMenu : MonoBehaviour
     {
-        #region
+        #region Variables
         //다음 씬 이름
         [SerializeField]
         private string loadToScene = "PlayScene";
@@ -26,7 +26,7 @@ namespace MyDefence
         public void Quit()
         {
             Debug.Log("Game Quit");
-            //어플 종료 명령 ( 에디터에서는 명령 무시, 실행 파일에서는 명령 실행 )
+            //어플 종료 명령 (에디터에서는 명령 무시, 실행파일에서는 명령 시행)
             Application.Quit();
         }
         #endregion
