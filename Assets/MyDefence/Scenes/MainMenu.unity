@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 8654559}
   - component: {fileID: 8654558}
   - component: {fileID: 8654557}
+  - component: {fileID: 8654560}
   m_Layer: 5
   m_Name: PlyBtn
   m_TagString: Untagged
@@ -236,7 +237,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 82b2946de4404b045b0ea8784c7c740c, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -253,6 +254,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8654555}
   m_CullTransparentMesh: 1
+--- !u!114 &8654560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 300
+  m_PreferredHeight: 250
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &299978590
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +387,111 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &367327452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1959772666513693892}
+    m_Modifications:
+    - target: {fileID: 2058729289331914570, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_Name
+      value: LaserFireEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+--- !u!1 &631295736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 631295737}
+  - component: {fileID: 631295738}
+  m_Layer: 10
+  m_Name: EffectPlayPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &631295737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631295736}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 2.796, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4042833767584553205}
+  m_Father: {fileID: 2096559011682768955}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &631295738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631295736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5044a6da5a46f3749b3601540e3438d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyDefence.IntervalParticlePlay
+  particleEffect: {fileID: 8830673422231450760}
+  plyaTimer: 5
+  delayTime: 0
 --- !u!1 &707662289
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +870,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818140515}
   m_CullTransparentMesh: 1
+--- !u!4 &829658043 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8438507334701972014, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+  m_PrefabInstance: {fileID: 367327452}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &892476875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,7 +1570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 82b2946de4404b045b0ea8784c7c740c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b11b61b2cb82dc149b59a21d4544c93f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1645,7 +1776,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -52}
-  m_SizeDelta: {x: 280, y: 150}
+  m_SizeDelta: {x: 280, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2035461798
 GameObject:
@@ -6779,6 +6910,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2848769953727897744}
+  - component: {fileID: 2848769953727897745}
+  - component: {fileID: 2848769953727897746}
   m_Layer: 10
   m_Name: PartToRotate
   m_TagString: Untagged
@@ -6795,10 +6928,11 @@ Transform:
   m_GameObject: {fileID: 8065459661681581636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 1.067, z: 1.46}
+  m_LocalPosition: {x: -0.84, y: 0.55, z: 1.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 829658043}
   m_Father: {fileID: 2848769953727897744}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &1988850873842859173
@@ -11460,7 +11594,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5853591729694859842}
-  - {fileID: 4042833767584553205}
+  - {fileID: 631295737}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2761418983015556852
@@ -16156,6 +16290,34 @@ Transform:
   - {fileID: 1959772666513693892}
   m_Father: {fileID: 1421990935818795062}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2848769953727897745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704293154769085116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04972a96557f81e4a99b73efd8f0e731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Rotater
+  rotationSpeed: {x: 0, y: 0.5, z: 0}
+--- !u!114 &2848769953727897746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704293154769085116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5044a6da5a46f3749b3601540e3438d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyDefence.IntervalParticlePlay
+  particleEffect: {fileID: 4320481165376485097, guid: 4970d4d2be117e7459ca4dbe5a4fe789, type: 3}
+  plyaTimer: 5
+  delayTime: 2
 --- !u!4 &2915972543226095022
 Transform:
   m_ObjectHideFlags: 0
@@ -20956,15 +21118,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128573799368700364}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.796, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7900416351588617455}
   - {fileID: 6751528817084624154}
   - {fileID: 5091101837240465180}
-  m_Father: {fileID: 2096559011682768955}
+  m_Father: {fileID: 631295737}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4483071475581671528
 Transform:
@@ -25887,7 +26049,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417993463415171098}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f83b7da184cbeb9488f91d8bf0483ebf, type: 3}
   m_Name: 
