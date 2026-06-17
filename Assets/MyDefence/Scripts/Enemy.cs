@@ -83,14 +83,14 @@ namespace MyDefence
         #region Custom Method
         void GoNextWayPoint()
         {
-            if (wayPointIndex >= WayPoints.points.Length - 1)
+            wayPointIndex++;
+
+            if (wayPointIndex >= WayPoints.points.Length)
             {
-                ArriveAtTarget(); // 이때 비로소 종점 처리를 하고 함수를 종료합니다.
+                ArriveAtTarget();
                 return;
             }
 
-            // 아직 끝이 아니라면 다음 방 번호로 넘어가고, 타겟을 다음 포인트로 변경합니다.
-            wayPointIndex++;
             target = WayPoints.points[wayPointIndex];
         }
 
