@@ -103,7 +103,7 @@ namespace MyDefence
             //현재 타일에 타워가 설치되었는지 여부
             if (tower != null)
             {
-                Debug.Log("타워가 설치되어있어 타일 UI를 보여준다");
+                //Debug.Log("타워가 설치되어있어 타일 UI를 보여준다");
                 buildManager.SelectTile(this);
                 return;
             }
@@ -112,7 +112,7 @@ namespace MyDefence
             if (buildManager.CannotBuild)
             {
                 //설치 실패
-                Debug.Log("선택한 타워가 없어 설치하지 못했습니다");
+                //Debug.Log("선택한 타워가 없어 설치하지 못했습니다");
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace MyDefence
             //업그레이드 비용 체크
             if (HasUpgradeCost == false)
             {
-                Debug.Log("업그레드 건설 비용이 부족합니다");
+                //Debug.Log("업그레드 건설 비용이 부족합니다");
                 return;
             }
 

@@ -12,20 +12,29 @@ namespace MyDefence
         //다음 씬 이름
         [SerializeField]
         private string loadToScene = "PlayScene";
+        [SerializeField]
+        private SceneFader fader;
         #endregion
+
+        private void Start()
+        {
+            fader.FadeStart(1f);
+        }
 
         #region Custom Method
         //플레이 버튼 클릭시 호출
         public void Play()
         {
-            //Debug.Log($"goto {loadToScene}");
-            SceneManager.LoadScene(loadToScene);
+            Debug.Log("Play");
+            fader.FadeTo(loadToScene);
+            //SceneManager.LoadScene(loadToScene);
         }
 
         //게임 종료 버튼 클릭시 호출
         public void Quit()
         {
             Debug.Log("Game Quit");
+            fader.FadeTo("");
             //어플 종료 명령 (에디터에서는 명령 무시, 실행파일에서는 명령 시행)
             Application.Quit();
         }

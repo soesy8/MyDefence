@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ namespace MyDefence
         #region Variables
         //게임중 메뉴 UI 게임오브젝트 인스턴스
         public GameObject pausedUI;
+
+        public SceneFader fader;
+        [SerializeField] private string loadToScene = "MainMenu";
         #endregion
 
         #region Unity Event Method
@@ -45,6 +49,7 @@ namespace MyDefence
             Time.timeScale = 1.0f;
 
             Debug.Log("Goto MainMenu!!!");
+            fader.FadeTo(loadToScene);
         }
 
         //리스타트 버튼 클릭시 호출
@@ -54,7 +59,7 @@ namespace MyDefence
 
             //Debug.Log("ReStart!!!");
             //현재 플레이하고 있는 씬을 다시 로드한다
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            fader.FadeTo(SceneManager.GetActiveScene().buildIndex);
         }
         #endregion
     }

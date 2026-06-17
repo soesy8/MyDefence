@@ -54,7 +54,7 @@ namespace MyDefence
         //게임오버 처리
         void GameOver()
         {
-            Debug.Log("Game Over!!!!");
+            Debug.Log("Game Over");
             isGameOver = true;
 
             //벌
