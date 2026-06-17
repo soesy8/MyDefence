@@ -22,7 +22,7 @@ namespace MySample
 
         //SerializeField 직렬화
         [SerializeField]
-        private string name = "Tom";
+        //private string name = "Tom";
 
         //직렬화된(Serializable) 구조체
         public TestStruct testStruct;

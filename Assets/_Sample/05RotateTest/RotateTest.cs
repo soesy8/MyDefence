@@ -15,7 +15,7 @@ namespace MySample
         public float moveSpeed = 5f;
 
         //회전 값 변수
-        private float x = 0;
+        //private float x = 0;
 
         //목표 오브젝트 트랜스폼 인스턴스
         public Transform target;

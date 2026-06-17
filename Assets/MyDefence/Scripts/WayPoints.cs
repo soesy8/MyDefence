@@ -1,0 +1,27 @@
+using UnityEngine;
+
+namespace MyDefence
+{
+    /// <summary>
+    /// 적의 이동 경로를 관리하는 클래스
+    /// </summary>
+    public class WayPoints : MonoBehaviour
+    {
+        #region Var
+        //웨이포인트 트랜스폼 객체 전역적 접근 가능
+        public static Transform[] points;
+        #endregion
+
+        #region
+        private void Awake()
+        {
+            //참조 points의 배열 선언
+            points = new Transform[transform.childCount];
+            for (int i = 0; i < points.Length; i++)
+            {
+                points[i] = transform.GetChild(i);
+            }
+        }
+        #endregion
+    }
+}

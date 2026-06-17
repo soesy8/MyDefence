@@ -13,6 +13,8 @@ namespace MyDefence
         //이동 목표 위치를 가지고 있는 오브젝트
         private Transform target;
 
+        private int wayPointIndex = 0;
+
         //Enemy 이동 속도
         private float speed;            //현재 이동 속도
         [SerializeField]
@@ -40,9 +42,10 @@ namespace MyDefence
         //유니티 이벤트 함수 구현부
         #region Unity Event Method
         private void Start()
-        {            
+        {
             //타겟(이동 목적지) 찾아오기
-            target = GameObject.FindGameObjectWithTag("End").transform;
+            //target = GameObject.FindGameObjectWithTag("End").transform;
+            target = WayPoints.points[0];
 
             //초기화
             health = startHealth;
@@ -64,7 +67,8 @@ namespace MyDefence
             float distance = Vector3.Distance(target.position, this.transform.position);
             if(distance <= 0.2f)
             {
-                ArriveAtTarget();
+                GoNextWayPoint();
+                //ArriveAtTarget();
             }
 
             //Health Bar 이미지 UI
@@ -77,6 +81,19 @@ namespace MyDefence
 
         //유저 구현 함수
         #region Custom Method
+        void GoNextWayPoint()
+        {
+            if (wayPointIndex >= WayPoints.points.Length - 1)
+            {
+                ArriveAtTarget(); // 이때 비로소 종점 처리를 하고 함수를 종료합니다.
+                return;
+            }
+
+            // 아직 끝이 아니라면 다음 방 번호로 넘어가고, 타겟을 다음 포인트로 변경합니다.
+            wayPointIndex++;
+            target = WayPoints.points[wayPointIndex];
+        }
+
         //Enemy가 종점에 도착시 처리 내용 구현
         void ArriveAtTarget()
         {

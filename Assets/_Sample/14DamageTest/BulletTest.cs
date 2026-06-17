@@ -9,8 +9,8 @@ namespace MySample
     public class BulletTest : Bullet
     {
         #region Variables
-        [SerializeField]
-        private float attackDamage = 50f;   //공격력
+        //[SerializeField]
+        //private float attackDamage = 50f;   //공격력
         #endregion
 
         #region Custom Method

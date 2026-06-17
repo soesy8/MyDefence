@@ -8,8 +8,12 @@ namespace MyDefence
     public class SpawnManager : MonoBehaviour
     {
         #region Variables
+        //웨이브 데이터
+        public Wave[] waves;        //웨이브 데이터 배열
+
+
         //적 프리팹 원본 오브젝트 인스턴스
-        public GameObject enemyPrefab;
+        //public GameObject enemyPrefab;
         //스폰 위치(position)를 가지고 트랜스폼 인스턴스
         public Transform start;
 
@@ -20,7 +24,7 @@ namespace MyDefence
         //웨이브 카운드
         private int waveCount = 0;
         //스폰 지연 시간
-        public float spawnDelay = 0.5f;
+        //public float spawnDelay = 0.5f;
 
         private int enemyMax = 0;       //이번 웨이브에서 스폰할 적의 최대 수
         public static int enemyAlive = 0;     //현재 웨이브에서 살아있는 적의 수
@@ -87,27 +91,30 @@ namespace MyDefence
         //적 웨이브 구현 - 코루틴 함수로 구현
         IEnumerator SpawnWave()
         {
+            //waves[0] 웨이브 데이터를 가져와서 Wave 생성
+            //wave : 이번에 웨이브할 데이터
+            //프리펩, 스폰 수, 스폰 간격
+            Wave wave = waves[waveCount];
+            
             GameData.Waves++;
             waveCount++;
-            //Debug.Log($"{waveCount}번째 Wave");
 
-            enemyMax = waveCount;
-            enemyAlive = waveCount;
+            enemyMax = wave.count;
+            enemyAlive = wave.count;
 
-
-            //waveCount 만큼 적 스폰하기
-            for (int i = 0; i < waveCount; i++)
+            //적 스폰하기
+            for (int i = 0; i < wave.count; i++)
             {
-                EnemySpawn();
-                //약간 지연
-                yield return new WaitForSeconds(spawnDelay);
+                EnemySpawn(wave.prefab);
+                //약간 지연, 적이 간격을 두고 스폰하도록 만든다
+                yield return new WaitForSeconds(wave.delayTime);
             }
         }
 
         //적 스폰하기
-        void EnemySpawn()
+        void EnemySpawn(GameObject prefab)
         {
-            Instantiate(enemyPrefab, start.position, Quaternion.identity);
+            Instantiate(prefab, start.position, Quaternion.identity);
         }
 
         //웨이브 대기하기
@@ -115,6 +122,17 @@ namespace MyDefence
         {
             //버튼 활성화 체크
             if (startButton.activeSelf) return;
+
+            //레벨 클리어 체크
+            if (waveCount >= waves.Length)
+            {
+                //레벨 클리어 로직
+                Debug.Log("클리어");
+
+                //스폰 기능 정지
+                this.enabled = false;
+                return;
+            }
 
             startButton.SetActive(true);
             waveInfoUI.SetActive(false);
