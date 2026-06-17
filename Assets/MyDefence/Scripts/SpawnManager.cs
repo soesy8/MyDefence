@@ -14,16 +14,24 @@ namespace MyDefence
         public Transform start;
 
         //스폰 타이머: 5초
-        public float spawnTimer = 5f;   //타이머 기준 시간
-        private float countdown = 0f;   //시간 누적 변수
+        //public float spawnTimer = 5f;   //타이머 기준 시간
+        //private float countdown = 0f;   //시간 누적 변수
 
         //웨이브 카운드
         private int waveCount = 0;
         //스폰 지연 시간
         public float spawnDelay = 0.5f;
 
+        private int enemyMax = 0;       //이번 웨이브에서 스폰할 적의 최대 수
+        public static int enemyAlive = 0;     //현재 웨이브에서 살아있는 적의 수
+
+        //스타트 버튼, 웨이브 인포 객체
+        public GameObject startButton;
+        public GameObject waveInfoUI;
+        public TextMeshProUGUI waveCountText;       //적 숫자 정보 텍스트
+
         //UI - TMP의 인스턴스 
-        public TextMeshProUGUI countdownText;
+        //public TextMeshProUGUI countdownText;
         #endregion
 
         #region Unity Event Method
@@ -36,7 +44,15 @@ namespace MyDefence
 
         private void Update()
         {
-            //[2]시점에서 5초 간격으로 Wave
+            if (enemyAlive <= 0)
+            {
+                ReadyWave();
+            }
+            else
+            {
+                waveCountText.text = $"{enemyAlive} / {enemyMax}";
+            }
+            /*//[2]시점에서 5초 간격으로 Wave
             countdown += Time.deltaTime;
             if (countdown >= spawnTimer)
             {
@@ -45,23 +61,39 @@ namespace MyDefence
 
                 //타이머 초기화
                 countdown = 0f;
-            }
+            }*/
 
             //Debug.Log($"countdown:{countdown}");
             //countdownText.text = countdown.ToString();
             //countdownText.text = string.Format("{0:00.00}", countdown); //실수(소수점) 이하 출력
-            countdownText.text = Mathf.Round(spawnTimer - countdown).ToString();       //정수(반올림하여) 출력
+            //countdownText.text = Mathf.Round(spawnTimer - countdown).ToString();       //정수(반올림하여) 출력
 
         }
         #endregion
 
         #region Custom Method
+        //StartWave 버튼 클릭 시 호출
+        public void StartWave()
+        {
+            //Enemy Wave
+            StartCoroutine(SpawnWave());
+
+            //ui 표시 설정
+            startButton.SetActive(false);
+            waveInfoUI.SetActive(true);
+
+        }
+
         //적 웨이브 구현 - 코루틴 함수로 구현
         IEnumerator SpawnWave()
         {
             GameData.Waves++;
             waveCount++;
             //Debug.Log($"{waveCount}번째 Wave");
+
+            enemyMax = waveCount;
+            enemyAlive = waveCount;
+
 
             //waveCount 만큼 적 스폰하기
             for (int i = 0; i < waveCount; i++)
@@ -76,6 +108,16 @@ namespace MyDefence
         void EnemySpawn()
         {
             Instantiate(enemyPrefab, start.position, Quaternion.identity);
+        }
+
+        //웨이브 대기하기
+        void ReadyWave()
+        {
+            //버튼 활성화 체크
+            if (startButton.activeSelf) return;
+
+            startButton.SetActive(true);
+            waveInfoUI.SetActive(false);
         }
         #endregion
     }

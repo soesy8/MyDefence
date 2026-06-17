@@ -23,6 +23,9 @@ namespace MyDefence
         [SerializeField]
         private float startHealth = 100f;   //체력 초기값
 
+        //죽음 체크
+        private bool isDeath = false;
+
         //죽음 이펙트
         public GameObject deathEffectPrefab;
 
@@ -80,6 +83,9 @@ namespace MyDefence
             //종점 도착 처리 
             GameData.UseLife();
 
+            //데이터 처리
+            SpawnManager.enemyAlive--;
+
             //Debug.Log("종점에 도착 했다");
             Destroy(this.gameObject);
         }
@@ -91,7 +97,7 @@ namespace MyDefence
             //Debug.Log($"health: {health}");
 
             //죽음 체크
-            if(health <= 0f)
+            if(health <= 0f && isDeath == false)
             {
                 Death();
             }
@@ -100,12 +106,16 @@ namespace MyDefence
         //죽음 처리
         private void Death()
         {
+            isDeath = true;
             //이펙트 효과(vfx, sfx)
             if(deathEffectPrefab != null)
             {
                 GameObject effectGo = Instantiate(deathEffectPrefab, this.transform.position, Quaternion.identity);
                 Destroy(effectGo, 3f);
             }
+
+            //데이터 처리
+            SpawnManager.enemyAlive--;
 
             //보상 처리(골드, 경험치, 아이템...)
             GameData.AddGold(rewardGold);
