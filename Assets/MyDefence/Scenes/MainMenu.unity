@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7622af36a4691ac438ab62a0fd3724bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.MainMenu
-  loadToScene: PlayScene
+  loadToScene: Level01
   fader: {fileID: 788215312}
 --- !u!4 &805032213
 Transform:
