@@ -20,7 +20,7 @@ namespace MyDefence
         private GameObject tower;
 
         //타일 오브젝트의 랜더러 컴포넌트 인스턴스
-        private Renderer renderer;
+        private Renderer tileRenderer;
 
         //마우스가 들어가면 바뀌는 컬러
         public Color hoverColor;
@@ -55,12 +55,12 @@ namespace MyDefence
         {
             //참조
             buildManager = BuildManager.Instance;
-            renderer = this.transform.GetComponent<Renderer>();
+            tileRenderer = this.transform.GetComponent<Renderer>();
 
             //필드 초기화
             //메터리얼이 원래 가지고 있던 컬러를 저장
             //originColor = renderer.material.color;
-            originMaterial = renderer.material;
+            originMaterial = tileRenderer.material;
             isUpgrade = false;
         }
 
@@ -81,14 +81,14 @@ namespace MyDefence
 
             //Debug.Log("타일에 들어간다, 연두색 변경");
             //renderer.material.color = hoverColor;
-            renderer.material = hoverMaterial;
+            tileRenderer.material = hoverMaterial;
         }
 
         void OnMouseExit()
         {
             //Debug.Log("타일에 나온다, 원래 컬러로 변경 ");
             //renderer.material.color = originColor;
-            renderer.material = originMaterial;
+            tileRenderer.material = originMaterial;
         }
 
         private void OnMouseDown()

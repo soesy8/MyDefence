@@ -15,7 +15,7 @@ namespace MyDefence
         #region
         private void Awake()
         {
-            //참조 points의 배열 선언
+            //참조 points의 배열 요소수 생성
             points = new Transform[transform.childCount];
             for (int i = 0; i < points.Length; i++)
             {
