@@ -11,6 +11,7 @@ namespace MyDefence
         //웨이브 데이터
         public Wave[] waves;        //웨이브 데이터 배열
 
+        public GameManager gamemanager; //게임 매니저 인스턴스
 
         //적 프리팹 원본 오브젝트 인스턴스
         //public GameObject enemyPrefab;
@@ -138,7 +139,8 @@ namespace MyDefence
             if (waveCount >= waves.Length)
             {
                 //레벨 클리어 로직
-                Debug.Log("클리어");
+                //Debug.Log("클리어");
+                gamemanager.ClearGame();
 
                 //스폰 기능 정지
                 this.enabled = false;

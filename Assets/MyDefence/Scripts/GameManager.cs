@@ -14,6 +14,8 @@ namespace MyDefence
         //게임오버 UI 게임오브젝트 인스턴스
         public GameObject gameOverUI;
 
+        public GameObject clearUI;  //클리어 UI
+
         //치트 체크 변수
         [SerializeField]
         private bool isCheating = false;
@@ -60,6 +62,13 @@ namespace MyDefence
             //벌
             //게임오버 UI 보여주기(활성화)
             gameOverUI.SetActive(true);
+        }
+
+        //클리어 처리
+        public void ClearGame()
+        {
+            Debug.Log("Clear");
+            clearUI.SetActive(true);
         }
         #endregion
 

@@ -2842,7 +2842,7 @@ GameObject:
   - component: {fileID: 686762344}
   - component: {fileID: 686762343}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ClearPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3089,6 +3089,7 @@ MonoBehaviour:
   - prefab: {fileID: 2338063145977790974, guid: c4bcee4927097e245b6f1353e797e3ea, type: 3}
     count: 10
     delayTime: 0.33
+  gamemanager: {fileID: 1864583930}
   start: {fileID: 1413397793}
   startButton: {fileID: 671637303}
   waveInfoUI: {fileID: 38531881}
@@ -3382,7 +3383,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 866771715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1864583931}
+        m_TargetAssemblyTypeName: MyDefence.PausedUI, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &866771715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3648,7 +3661,7 @@ GameObject:
   - component: {fileID: 980967659}
   - component: {fileID: 980967658}
   m_Layer: 5
-  m_Name: ClearText (1)
+  m_Name: WaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3693,7 +3706,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Unlock Level 2
+  m_text: Survived Waves
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 10ebd9981d4f3a742acb3e20e93b1206, type: 2}
   m_sharedMaterial: {fileID: 9100528899321894145, guid: 10ebd9981d4f3a742acb3e20e93b1206, type: 2}
@@ -5766,7 +5779,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1385972012}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1196544503}
+        m_TargetAssemblyTypeName: MyDefence.SceneFader, Assembly-CSharp
+        m_MethodName: FadeTo
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Level02
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1409734484
 GameObject:
   m_ObjectHideFlags: 0
@@ -7741,6 +7766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyDefence.GameManager
   gameOverUI: {fileID: 114191878}
+  clearUI: {fileID: 1327248066}
   isCheating: 1
 --- !u!114 &1864583931
 MonoBehaviour:
