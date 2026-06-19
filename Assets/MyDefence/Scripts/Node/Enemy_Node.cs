@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -121,6 +120,7 @@ namespace MyDefence
         public void TakeDamage(float damage)
         {
             health -= damage;
+            
             //Debug.Log($"health: {health}");
 
             //죽음 체크

@@ -8,6 +8,8 @@ namespace MyDefence
     public class SpawnManager : MonoBehaviour
     {
         #region Variables
+        
+
         //웨이브 데이터
         public Wave[] waves;        //웨이브 데이터 배열
 
@@ -138,8 +140,7 @@ namespace MyDefence
             //레벨 클리어 체크
             if (waveCount >= waves.Length)
             {
-                //레벨 클리어 로직
-                //Debug.Log("클리어");
+                //클리어 로직
                 gamemanager.ClearGame();
 
                 //스폰 기능 정지

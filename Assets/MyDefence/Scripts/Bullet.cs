@@ -40,6 +40,9 @@ namespace MyDefence
             }
 
             transform.Translate(dir.normalized * Time.deltaTime * moveSpeed, Space.World);
+
+            //타겟을 바라본다
+            transform.LookAt(target.position);
         }
         #endregion
 
@@ -72,15 +75,22 @@ namespace MyDefence
         //타격 당한 적에게 데미지 주기 - 킬
         protected virtual void Damage(Transform _target)
         {
-            //Destroy(enemy.gameObject);
-
             //Enemy 인스턴스 가져오기
             Enemy enemy = _target.GetComponent<Enemy>();
+
             if(enemy != null)
             {
                 enemy.TakeDamage(attackDamage);
+                return;
             }
 
+            Enemy_Node enemyNode = _target.GetComponent<Enemy_Node>();
+
+            if (enemyNode != null)
+            {
+                enemyNode.TakeDamage(attackDamage);
+                return;
+            }
         }
         #endregion
     }

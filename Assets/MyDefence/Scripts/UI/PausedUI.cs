@@ -48,7 +48,7 @@ namespace MyDefence
         {
             Time.timeScale = 1.0f;
 
-            Debug.Log("Goto MainMenu!!!");
+            Debug.Log("Goto MainMenu");
             fader.FadeTo(loadToScene);
         }
 

@@ -121,8 +121,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4575964747763972694}
-  - component: {fileID: 6139705581555543162}
   - component: {fileID: 6877033644653469288}
+  - component: {fileID: 6139705581555543162}
   m_Layer: 0
   m_Name: Enemy_Node
   m_TagString: Enemy
@@ -147,6 +147,23 @@ Transform:
   - {fileID: 2007668689557792156}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6877033644653469288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338063145977790974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b429497c31e4c2458024497f517f9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Enemy_Node
+  startSpeed: 5
+  startHealth: 100
+  deathEffectPrefab: {fileID: 4611773428630189573, guid: e07e7ee3ab2bedc41b3c011a0bf1d64d, type: 3}
+  rewardGold: 50
+  healthBarImage: {fileID: 9141092763674894746}
 --- !u!135 &6139705581555543162
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -168,23 +185,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6877033644653469288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2338063145977790974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b429497c31e4c2458024497f517f9b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MyDefence.Enemy_Node
-  startSpeed: 5
-  startHealth: 100
-  deathEffectPrefab: {fileID: 4611773428630189573, guid: e07e7ee3ab2bedc41b3c011a0bf1d64d, type: 3}
-  rewardGold: 50
-  healthBarImage: {fileID: 9141092763674894746}
 --- !u!1 &2573433909473236633
 GameObject:
   m_ObjectHideFlags: 0

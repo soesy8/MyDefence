@@ -30,7 +30,8 @@ namespace MyDefence
         //메인메뉴 버튼 클릭시 호출
         public void MainMenu()
         {
-            Debug.Log("Goto MainMenu!!!");
+            Debug.Log("Goto MainMenu");
+            Time.timeScale = 1.0f;
             fader.FadeTo(loadToScene);
         }
 
@@ -39,6 +40,7 @@ namespace MyDefence
         {
             //Debug.Log("ReStart!!!");
             //현재 플레이하고 있는 씬을 다시 로드한다
+            Time.timeScale = 1.0f;
             fader.FadeTo(SceneManager.GetActiveScene().buildIndex);            
         }
         #endregion

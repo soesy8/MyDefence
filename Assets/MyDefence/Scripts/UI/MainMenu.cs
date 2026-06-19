@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyDefence
 {
@@ -33,6 +32,9 @@ namespace MyDefence
         //게임 종료 버튼 클릭시 호출
         public void Quit()
         {
+            //데이터 초기화 치트키
+            PlayerPrefs.DeleteAll();
+
             Debug.Log("Game Quit");
             fader.FadeTo("");
             //어플 종료 명령 (에디터에서는 명령 무시, 실행파일에서는 명령 시행)

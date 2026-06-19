@@ -8,8 +8,12 @@ namespace MyDefence
     public class GameManager : MonoBehaviour
     {
         #region Variables
+        //현재 레벨
+        [SerializeField] private int nowLevel;
+
         //게임오버 체크
         private bool isGameOver = false;
+        //private static bool isClear = false;
 
         //게임오버 UI 게임오브젝트 인스턴스
         public GameObject gameOverUI;
@@ -41,7 +45,7 @@ namespace MyDefence
             }
 
             //치트키
-            if(Input.GetKeyDown(KeyCode.M))
+            /*if(Input.GetKeyDown(KeyCode.M))
             {
                 ShowMeTheMoney();
             }
@@ -49,6 +53,10 @@ namespace MyDefence
             {
                 GameOver();
             }
+            if (Input.GetKeyDown(KeyCode.C) && isCheating)
+            {
+                ClearGame();
+            }*/
         }
         #endregion
 
@@ -68,6 +76,15 @@ namespace MyDefence
         public void ClearGame()
         {
             Debug.Log("Clear");
+            int clearLevel = PlayerPrefs.GetInt("ClearLevel", 0);
+
+            if (nowLevel > clearLevel)
+            {
+                //게임 데이터 저장
+                PlayerPrefs.SetInt("ClearLevel", nowLevel);
+                Debug.Log($"Load Clear Level : {clearLevel}");
+            }
+            
             clearUI.SetActive(true);
         }
         #endregion

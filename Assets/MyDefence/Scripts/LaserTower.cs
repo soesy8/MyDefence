@@ -74,12 +74,24 @@ namespace MyDefence
         {
             //초당 30데미지 주기, 속도 줄이기
             float frameDamage = Time.deltaTime * laserDamage;   //프레임당 데미지
+
             //Enemy 인스턴스 가져오기
             Enemy enemy = target.GetComponent<Enemy>();
+
             if (enemy != null)
             {
                 enemy.TakeDamage(frameDamage);  //데미지 주기
                 enemy.Slow(slowRate);           //속도 감속
+                return;
+            }
+            
+            Enemy_Node enemyNode = target.GetComponent<Enemy_Node>();
+
+            if (enemyNode != null)
+            {
+                enemyNode.TakeDamage(frameDamage);
+                enemyNode.Slow(slowRate);
+                return;
             }
 
             //라인 렌더러 그리기 / 이펙트 - 시작시점, 엔드지점 설정
